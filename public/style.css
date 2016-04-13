@@ -1,0 +1,22 @@
+#header_lgs {
+	width:100%;
+	text-align:center;
+	background-color:#54d8e0;
+	height:125px;
+	position:absolute;
+	top:0;
+	left:0;
+}
+
+h1.header_title {
+	line-height:0%;
+	font-size:75px;
+}
+
+.korolev_bold {
+	font-family:'Korolev Bold';
+}
+
+.korolev_medium {
+	font-family:'Korolev Medium';
+}
