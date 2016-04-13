@@ -1,53 +1,45 @@
-# Liugues
+# INTRODUCTION
 
-This README outlines the details of collaborating on this Ember application.
-A short introduction of this app could easily go here.
+This (still) unnamed project will be a webpage in which football's live info will 
+be displayed. It will work in a similar way as other pages such as FlashScores.co.uk.
+Of course, this kind of services require plenty of employees and work to have the
+latest data. That's why only Swedish football league's results and info will be
+shown on the page for this project.
 
-## Prerequisites
+Nevertheless, the design will be such that allows easy administration and creation
+of new data. This is, new leagues, teams, matches... can be added when needed,
+without no other change in the design.
 
-You will need the following things properly installed on your computer.
+## Functional Specification
 
-* [Git](http://git-scm.com/)
-* [Node.js](http://nodejs.org/) (with NPM)
-* [Bower](http://bower.io/)
-* [Ember CLI](http://ember-cli.com/)
-* [PhantomJS](http://phantomjs.org/)
+The webpage's homepage will display all leagues that are available to check in
+the site, with all the matches that will be played that week.
 
-## Installation
+Clicking in each of the matches will lead to another page with information about
+that game, the playing teams, their squads, ranking of the league and info of that
+kind.
 
-* `git clone <repository-url>` this repository
-* change into the new directory
-* `npm install`
-* `bower install`
+Clicking in one team will lead to a page that shows that team's information, such
+as current players, track record, and so on.
 
-## Running / Development
+The back-end (administration site) of the webpage must be easy to use. This means
+that no technique (Like accessing the database) knowledge will be required to use
+it.
 
-* `ember server`
-* Visit your app at [http://localhost:4200](http://localhost:4200).
+The design (of the database) must be such that will allow different information
+of many players, many teams, many leagues and many seasons to be stored without
+any further changes to this design.
 
-### Code Generators
+## Non-functional specification
 
-Make use of the many generators for code, try `ember help generate` for more details
+I personally don't know how to use any of the server-side frameworks mentioned
+in the requirements. But after making a bit of research, I've chosen Angular,
+because of all of the others, Angular seems the one that is being worked the most
+on.
 
-### Running Tests
+Express.js will be the server-side framework. I've seen that it works in a similar
+way as Flask (routing, static pages...) but I have already worked with Flask and
+want to try something else, but not too different either.
 
-* `ember test`
-* `ember test --server`
-
-### Building
-
-* `ember build` (development)
-* `ember build --environment production` (production)
-
-### Deploying
-
-Specify what it takes to deploy your app.
-
-## Further Reading / Useful Links
-
-* [ember.js](http://emberjs.com/)
-* [ember-cli](http://ember-cli.com/)
-* Development Browser Extensions
-  * [ember inspector for chrome](https://chrome.google.com/webstore/detail/ember-inspector/bmdblncegkenkacieihfhpjfppoconhi)
-  * [ember inspector for firefox](https://addons.mozilla.org/en-US/firefox/addon/ember-inspector/)
-
+For deployment, I'm using a localhost copy for development and a working copy that
+is going to be pushed to a server in Heroku.
