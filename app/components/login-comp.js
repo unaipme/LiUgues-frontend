@@ -26,7 +26,7 @@ var loginComp = Ember.Component.extend({
 			var u = Ember.$("#username")[0].value;
 			var p = Ember.$("#password")[0].value;
 			var t = this;
-			Ember.$.ajax("http://liugues-api.herokuapp.com/p/login", {
+			Ember.$.ajax("https://liugues-api.herokuapp.com/p/login", {
 				method: "POST",
 				data: {username: u, password: p},
 				success: function(data) {
