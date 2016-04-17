@@ -8,6 +8,12 @@
 	left:0;
 }
 
+#login_rect {
+	width:60%;
+	font-family:'Korolev Light';
+	color:#212121;
+}
+
 h1.header_title {
 	line-height:0%;
 	font-size:75px;
@@ -19,4 +25,34 @@ h1.header_title {
 
 .korolev_medium {
 	font-family:'Korolev Medium';
+}
+
+.country_el {
+	border: 1px solid #CFD8DC;
+	border-radius:2px;
+	width:80%;
+}
+
+.section_title {
+	width:60%;
+	padding:10px;
+	background-color:#B3E5FC;
+	font-size:20px;
+	font-family:'Korolev Medium', arial;
+	text-align: left;
+	border-top-left-radius:5px;
+	border-top-right-radius:5px;
+}
+
+button {
+	padding: 7px;
+	padding-left: 20px;
+	padding-right: 20px;
+	font-family: 'Korolev Light';
+	background-color: #B3E5FC;
+	border: 0;
+	font-size: 15px;
+	cursor: pointer;
+	border-radius: 3px;
+	box-shadow: 0 2px 3px 1px #757575;
 }

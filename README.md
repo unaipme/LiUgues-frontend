@@ -1,6 +1,6 @@
 # INTRODUCTION
 
-This (still) unnamed project will be a webpage in which football's live info will 
+"Liugues" project will be a webpage in which football's live info will 
 be displayed. It will work in a similar way as other pages such as FlashScores.co.uk.
 Of course, this kind of services require plenty of employees and work to have the
 latest data. That's why only Swedish football league's results and info will be
@@ -37,9 +37,24 @@ in the requirements. But after making a bit of research, I've chosen Angular,
 because of all of the others, Angular seems the one that is being worked the most
 on.
 
+### UPDATE
+
+After following some guides about Angular and Ember, I finally have decided to use
+the last one. It's more "beginner-friendly" and, even though it does introduce new
+concepts, they are well explained in the official tutorials, on Ember's web page.
+It includes a comfortable framework to work with via command line, which eases the
+process a lot, too.
+
 Express.js will be the server-side framework. I've seen that it works in a similar
 way as Flask (routing, static pages...) but I have already worked with Flask and
 want to try something else, but not too different either.
 
 For deployment, I'm using a localhost copy for development and a working copy that
 is going to be pushed to a server in Heroku.
+
+### IMPORTANT NOTICE
+
+This repository only hosts the frontend code. For the backend code, check the other
+Gitlab repository at: https://gitlab.ida.liu.se/unape833/TDDD272016_liugues-be
+
+You can see the app deployed at: http://liugues.herokuapp.com/
