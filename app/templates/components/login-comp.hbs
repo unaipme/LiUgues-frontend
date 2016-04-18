@@ -1,10 +1,12 @@
-<p><label for="username">Username:</label> {{input id="username"}}</p>
-<p><label for="password">Password:</label> {{input type="password" id="password" action="submit" on="enter"}}</p>
+<p><label for="username">Username:</label> {{input id="username" required=true action="submit" on="enter"}}</p>
+<p><label for="password">Password:</label> {{input type="password" id="password" action="submit" on="enter" required=true}}</p>
 <p><button {{action "submit"}}><span>Submit</span></button></p>
 {{#if isLoading}}
 <p><img src="loading.gif" style="width:50px; height:50px" /></p>
 {{/if}}
-<p id="errorConnecting" style="display:none">An error occurred and the database couldn't be reached.</p>
-<p id="errorLogging" style="display:none">The username or the password is incorrect</p>
+<p id="errorConnecting" class="error_msg" style="display:none">An error occurred and the database couldn't be reached.</p>
+<p id="errorLogging" class="error_msg" style="display:none">The username or the password is incorrect</p>
+<p id="errorForm" class="error_msg" style="display:none">You have to fill both username and password fields</p>
+<p id="errorContent" class="error_msg" style="display:none">You can't use the following characters: ' \ ;</p>
 
 {{yield}}
