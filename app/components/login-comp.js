@@ -7,7 +7,7 @@ var loginComp = Ember.Component.extend({
 	actions: {
 		checkContent(t) {
 			var r = false;
-			var b = ["'", "\\", ";"];
+			var b = ["'", "\\", ";", "\""];
 			for (var i in b) {
 				r |= (t.indexOf(b[i]) !== -1)
 			}

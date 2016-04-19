@@ -1,8 +1,9 @@
 import Ember from 'ember';
 
 export default Ember.Route.extend({
-	beforeModel(tr) {
-		var tkn = tr.params.admin.token;
+	model(tr) {
+		var model = {};
+		var tkn = tr.token;
 		var self = this;
 		Ember.$.ajax("https://liugues-api.herokuapp.com/p/check_user", {
 			method: "POST",
@@ -16,8 +17,10 @@ export default Ember.Route.extend({
 				}
 			},
 			error: function(data) {
-				console.log("Error!");
+				console.log("Error!", data);
 			}
 		});
+		model.token = tkn;
+		return model;
 	}
 });

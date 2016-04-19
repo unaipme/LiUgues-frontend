@@ -14,6 +14,60 @@
 	color:#212121;
 }
 
+#panel_loading_screen {
+	font-family:'Korolev Medium';
+	border-collapse:collapse;
+	padding: 20px;
+}
+
+#login_user_info {
+	width:100%;
+	background-color:#CFD8DC;
+	font-family:'Korolev Light';
+	padding: 6px;
+	margin-bottom: 15px;
+	text-align:left;
+	box-sizing: border-box;
+}
+
+#user_pic_wrap {
+	padding:7px;
+}
+
+table#ch_pass_table {
+	width:100%;
+	border-spacing: 10px;
+}
+
+table#ch_pass_table td:last-child {
+	text-align:right;
+}
+
+table#ch_pass_table tr:last-child td {
+	text-align:center;
+}
+
+table#ch_pass_table input[type=text], table#ch_pass_table input[type=password] {
+	width:100%;
+}
+
+button#main_log_out {
+	float:right;
+	vertical-align:bottom;
+}
+
+table#user_info_table {
+	width:100%;
+}
+
+table#user_info_table td:first-child {
+	width:74px;
+}
+
+table#user_info_table td {
+	vertical-align: bottom;
+}
+
 h1.header_title {
 	line-height:0%;
 	font-size:75px;
@@ -44,15 +98,82 @@ h1.header_title {
 	border-top-right-radius:5px;
 }
 
+.panel_block_header {
+	width:70%;
+	/*border: 1px solid #E0E0E0;*/
+	border:0;
+	border-bottom: 1px solid #E0E0E0;
+	font-family:'Korolev Light';
+	font-size: 17px;
+	padding: 6px;
+	cursor:pointer;
+	/*border-top-left-radius:5px;
+	border-top-right-radius:5px;*/
+	text-align:left;
+	color:#00ACC1;
+}
+
+.expand_arrow {
+	float:right;
+	transition: 0.5s transform;
+}
+
+.arrow_turn {
+	transform: rotate(-180deg);
+}
+
+.panel_block_content {
+	display:none;
+	/*border:1px solid #E0E0E0;
+	border-top:0;*/
+	width:70%;
+	font-family:'Slabo 27px', arial;
+	padding:6px;
+	color: #212121;
+}
+
+.error_dsp_wrap {
+	color:white;
+}
+
+.error_dsp_wrap:after {
+	content: ".";
+}
+
+.error_dsp {
+	color:#F44336;
+	display:none;
+}
+
+.success_dsp {
+	color:#4CAF50;
+	display:none;
+}
+
 button {
+	outline:none;
 	padding: 7px;
 	padding-left: 20px;
 	padding-right: 20px;
 	font-family: 'Korolev Light';
 	background-color: #B3E5FC;
-	border: 0;
 	font-size: 15px;
 	cursor: pointer;
 	border-radius: 3px;
+	border:0;
 	box-shadow: 0 2px 3px 1px #757575;
+}
+
+button:active {
+	margin-top: 2px;
+	margin-bottom: -2px;
+	box-shadow: 0 0 3px 1px #757575;
+}
+
+hr {
+	width: 35%;
+	border-style: none;
+	border: 1px solid #00ACC1;
+	margin-top: 30px;
+	margin-bottom: 30px;
 }

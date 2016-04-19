@@ -1,0 +1,53 @@
+{{#if isLoading}}
+<div id="panel_loading_screen"><center><img src="loading.gif" /></center></div>
+{{else}}
+	<center>
+		<div id="login_user_info">
+			<table id="user_info_table">
+				<tr>
+					<td>
+						<span id="user_pic_wrap"><img src="{{user_pic}}" style="width:60px" /></span>
+					</td>
+					<td>
+						<span id="welcome_user_text">Welcome back, {{username}}.</span>
+					</td>
+					<td>
+						<button id="main_log_out" {{action "logOut"}}>Log out</button>
+					</td>
+				</tr>
+			</table>
+		</div>
+		<div id="ch_pass_h" class="panel_block_header" {{action "toggleElement" "#ch_pass_h"}}>
+			Change password<img class="expand_arrow" src="arrow.png" style="width:25px;"/>
+		</div>
+		<div id="ch_pass_c" class="panel_block_content">
+			<table id="ch_pass_table">
+				<tr>
+					<td><label for="ch_pass_old_pass">Current password:</label></td>
+					<td>{{input type="password" id="ch_pass_old_pass"}}</td>
+				</tr>
+				<tr>
+					<td><label for="ch_pass_new_pass">New password:</label></td>
+					<td>{{input type="password" id="ch_pass_new_pass"}}</td>
+				</tr>
+				<tr>
+					<td><label for="ch_pass_conf_pass">Confirm password:</label></td>
+					<td>{{input type="password" id="ch_pass_conf_pass" enter=""}}</td>
+				</tr>
+				<tr>
+					<td colspan="2"><button {{action "changePassword"}}>Save changes</button></td>
+				</tr>
+			</table>
+			<div id="ch_pass_error_wrap" class="error_dsp_wrap"><span id="ch_pass_success" class="success_dsp" /><span id="ch_pass_error" class="error_dsp" /></div>
+		</div>
+		<hr />
+		<div id="user_reg_h" class="panel_block_header" {{action "toggleElement" "#user_reg_h"}}>
+			Register new user<img class="expand_arrow" src="arrow.png" style="width:25px;"/>
+		</div>
+		<div id="user_reg_c" class="panel_block_content">
+			<p>Pending</p>
+		</div>
+	</center>
+{{/if}}
+
+{{yield}}
