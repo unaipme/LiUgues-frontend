@@ -9,7 +9,7 @@ var loginComp = Ember.Component.extend({
 			var r = false;
 			var b = ["'", "\\", ";", "\""];
 			for (var i in b) {
-				r |= (t.indexOf(b[i]) !== -1)
+				r |= (t.indexOf(b[i]) !== -1);
 			}
 			this.set("badContent", r);
 		},

@@ -2,7 +2,7 @@
 <div id="panel_loading_screen"><center><img src="loading.gif" /></center></div>
 {{else}}
 	<center>
-		<div id="login_user_info">
+		<div id="login_user_info" class="info_block">
 			<table id="user_info_table">
 				<tr>
 					<td>
@@ -21,18 +21,18 @@
 			Change password<img class="expand_arrow" src="arrow.png" style="width:25px;"/>
 		</div>
 		<div id="ch_pass_c" class="panel_block_content">
-			<table id="ch_pass_table">
+			<table id="ch_pass_table" class="admin_panel_table">
 				<tr>
 					<td><label for="ch_pass_old_pass">Current password:</label></td>
-					<td>{{input type="password" id="ch_pass_old_pass"}}</td>
+					<td>{{input type="password" id="ch_pass_old_pass" enter="changePassword"}}</td>
 				</tr>
 				<tr>
 					<td><label for="ch_pass_new_pass">New password:</label></td>
-					<td>{{input type="password" id="ch_pass_new_pass"}}</td>
+					<td>{{input type="password" id="ch_pass_new_pass" enter="changePassword"}}</td>
 				</tr>
 				<tr>
 					<td><label for="ch_pass_conf_pass">Confirm password:</label></td>
-					<td>{{input type="password" id="ch_pass_conf_pass" enter=""}}</td>
+					<td>{{input type="password" id="ch_pass_conf_pass" enter="changePassword"}}</td>
 				</tr>
 				<tr>
 					<td colspan="2"><button {{action "changePassword"}}>Save changes</button></td>
@@ -45,7 +45,85 @@
 			Register new user<img class="expand_arrow" src="arrow.png" style="width:25px;"/>
 		</div>
 		<div id="user_reg_c" class="panel_block_content">
-			<p>Pending</p>
+			<table id="register_table" class="admin_panel_table">
+				<tr>
+					<td colspan="2"><div class="info_block">To register a new user, fill in the username. Then generate the password and give it to the new user.</div></td>
+				</tr>
+				<tr>
+					<td><label for="reg_new_username">Username:</label></td>
+					<td>{{input id="reg_new_username"}}</td>
+				</tr>
+				<tr>
+					<td>{{input disabled=true id="reg_new_password" value="Password"}}</td>
+					<td><button {{action "generatePassword"}}>Generate password</button></td>
+				</tr>
+				<tr>
+					{{#unless registerAllowed}}
+					<td colspan="2"><button disabled>Register</button></td>
+					{{else}}
+					<td colspan="2"><button {{action "register"}}>Register</button></td>
+					{{/unless}}
+				</tr>
+			</table>
+			<div id="reg_error_wrap" class="error_dsp_wrap"><span id="reg_success" class="success_dsp" /><span id="reg_error" class="error_dsp" /></div>
+		</div>
+		<hr />
+		<div id="country_mgm_h" class="panel_block_header" {{action "toggleElement" "#country_mgm_h"}}>
+			Country management<img class="expand_arrow" src="arrow.png" style="width:25px;"/>
+		</div>
+		<div id="country_mgm_c" class="panel_block_content">
+			<table class="admin_panel_table">
+				{{#if selectedCountry}}
+				<tr>
+					<td>Name:</td>
+					{{#if newCountry}}
+					<td>{{input id="sel_country_name" value=selectedCountry.c_name}}</td>
+					{{else}}
+					<td>{{input id="sel_country_name" value=selectedCountry.c_name keyUp=(action "checkCountryChange")}}</td>
+					{{/if}}
+				</tr>
+				<tr>
+					<td>Flag directory:</td>
+					{{#if newCountry}}
+					<td>{{input id="sel_country_flag" value=selectedCountry.c_flag}}</td>
+					{{else}}
+					<td>{{input id="sel_country_flag" value=selectedCountry.c_flag keyUp=(action "checkCountryChange")}}</td>
+					{{/if}}
+				</tr>
+				<tr>
+					{{#if newCountry}}
+					<td><button id="save_ch_country" {{action "saveChanges" "country"}}>Save changes</button></td>
+					{{else}}
+					<td><button id="save_ch_country" disabled {{action "saveChanges" "country"}}>Save changes</button></td>
+					{{/if}}
+					<td><button {{action "discardChanges" "country"}}>Discard changes</button></td>
+				</tr>
+				{{#if selectedCountry.c_id}}
+				<tr>
+					<td>&nbsp;</td>
+					<td><button class="important_func" {{action "deleteCountry"}}>Delete country</button></td>
+				</tr>
+				{{/if}}
+				{{#if countryLoading}}
+				<tr>
+					<td colspan="2" style="text-align:center"><img src="loading.gif" style="width:50px" /></td>
+				</tr>
+				{{/if}}
+				{{else}}
+				<tr>
+					<td colspan="2">
+						<select id="ch_country_select" onChange={{action "loadCountry"}}>
+							<option selected disabled>Choose an option</option>
+							<option id="country-1">Create new country</option>
+							{{#each countryList as |c|}}
+								<option id="country{{c.c_id}}" style="background-image:url({{c.c_flag}})">{{c.c_name}}</option>
+							{{/each}}
+						</select>
+					</td>
+				</tr>
+				{{/if}}
+			</table>
+			<div id="country_error_wrap" class="error_dsp_wrap"><span id="country_success" class="success_dsp" /><span id="country_error" class="error_dsp" /></div>
 		</div>
 	</center>
 {{/if}}
