@@ -1,5 +1,5 @@
-<p><label for="username">Username:</label> {{input id="username" required=true action="submit" on="enter"}}</p>
-<p><label for="password">Password:</label> {{input type="password" id="password" action="submit" on="enter" required=true}}</p>
+<p><label for="username">Username:</label> {{input id="username" required=true enter="submit"}}</p>
+<p><label for="password">Password:</label> {{input type="password" id="password" enter="submit" required=true}}</p>
 <p><button {{action "submit"}}><span>Submit</span></button></p>
 {{#if isLoading}}
 <p><img src="loading.gif" style="width:50px; height:50px" /></p>

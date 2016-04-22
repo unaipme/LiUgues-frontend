@@ -56,14 +56,14 @@ table#user_info_table td {
 	vertical-align: bottom;
 }
 
-select#ch_country_select {
+select {
 	font-family: 'Slabo 27px', arial;
 	font-size: 16px;
 	width: 100%;
 	padding: 5px;
 }
 
-select#ch_country_select option {
+select option {
 	font-size: 19px;
 	padding: 10px;
 	background-repeat: no-repeat;

@@ -1,19 +1,20 @@
 import Ember from 'ember';
 
 export default Ember.Component.extend({
-	isLoading: true,
+	isLoading: false,
 	registerAllowed: false,
 	token: null,
 	username: null,
 	goToLogin: null,
 	countryList: null,
+	leagueList: null,
 	selectedCountry: null,
 	selectedCountryIndex: -1,
 	newCountry: false,
 	countryLoading: false,
 	init: function() {
 		this._super();
-		var tasks = 2;
+		var tasks = 3;
 		var self = this;
 		Ember.$.ajax("https://liugues-api.herokuapp.com/g/users", {
 			method: "GET",
@@ -26,13 +27,16 @@ export default Ember.Component.extend({
 				} else {
 					self.set("user_pic", "unknown.gif");
 				}
+				console.log("User loaded", tasks);
 				if (--tasks===0) {
+					console.log("Tasks done", tasks);
 					self.set("isLoading", false);
 				}
 			},
 			error: function() {
-				console.log("ERROR!");
+				console.log("Error loading user", tasks);
 				if (--tasks===0) {
+					console.log("Tasks done", tasks);
 					self.set("isLoading", false);
 				}
 			}
@@ -41,13 +45,34 @@ export default Ember.Component.extend({
 			method: "GET",
 			success: function(data) {
 				self.set("countryList", data);
+				console.log("Countries loaded", tasks);
 				if (--tasks===0) {
+					console.log("Tasks done", tasks);
 					self.set("isLoading", false);
 				}
 			},
 			error: function() {
-				console.log("ERROR!");
+				console.log("Error loading countries", tasks);
 				if (--tasks===0) {
+					console.log("Tasks done", tasks);
+					self.set("isLoading", false);
+				}
+			}
+		});
+		Ember.$.ajax("https://liugues-api.herokuapp.com/g/leagues", {
+			method: "GET",
+			success: function(data) {
+				self.set("leagueList", data);
+				console.log("Leagues loaded", tasks);
+				if (--tasks===0) {
+					console.log("Tasks done", tasks);
+					self.set("isLoading", false);
+				}
+			},
+			error: function() {
+				console.log("Error loading leagues", tasks);
+				if (--tasks===0) {
+					console.log("Tasks done", tasks);
 					self.set("isLoading", false);
 				}
 			}
@@ -292,6 +317,15 @@ export default Ember.Component.extend({
 					self.set("newCountry", false);
 				}
 			});
-		}
+		}/*,
+		showLeagues(event) {
+			var t = event.target;
+			var e = t.options[t.selectedIndex];
+			var id = parseInt(e.id.substr("lcountry".length));
+			this.set("countryLeagues", this.get("leagueList").filter(function(i){
+				return i.l_country == id;
+			}));
+			console.log(this.get("countryLeagues"));
+		}*/
 	}
 });
