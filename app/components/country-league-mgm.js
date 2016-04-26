@@ -83,7 +83,7 @@ export default Ember.Component.extend({
 				return;
 			}
 			this.set("leagueLoading", true);
-			Ember.$.ajax("http://liugues-api.herokuapp.com/p/del_league", {
+			Ember.$.ajax("https://liugues-api.herokuapp.com/p/del_league", {
 				method: "POST",
 				data: {l_id: id},
 				success: function(data) {
@@ -211,7 +211,7 @@ export default Ember.Component.extend({
 						l_logo: this.get("selectedLeague").l_logo,
 						l_country: l_country
 					};
-					ajaxURL = "http://liugues-api.herokuapp.com/p/ch_league";
+					ajaxURL = "https://liugues-api.herokuapp.com/p/ch_league";
 					errorID = "league_error";
 					checkFunc = function(){
 						if (!data.l_name || data.l_name === "") {

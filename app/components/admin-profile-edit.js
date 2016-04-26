@@ -66,7 +66,7 @@ export default Ember.Component.extend({
 				this.send("showMessage", id, "The username field must be filled.");
 				return;
 			}
-			Ember.$.ajax("http://localhost:5000/p/register", {
+			Ember.$.ajax("https://liugues-api.herokuapp.com/p/register", {
 				method: "POST",
 				data: {
 					username: u,
