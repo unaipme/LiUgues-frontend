@@ -1,0 +1,145 @@
+<div id="country_mgm_h" class="panel_block_header" {{action "toggleElement" "#country_mgm_h"}}>
+	Country management<img class="expand_arrow" src="arrow.png" style="width:25px;"/>
+</div>
+<div id="country_mgm_c" class="panel_block_content">
+	<table class="admin_panel_table">
+		{{#if selectedCountry}}
+		<tr>
+			<td>Name:</td>
+			{{#if newCountry}}
+			<td>{{input id="sel_country_name" value=selectedCountry.c_name}}</td>
+			{{else}}
+			<td>{{input id="sel_country_name" value=selectedCountry.c_name keyUp=(action "checkCountryChange")}}</td>
+			{{/if}}
+		</tr>
+		<tr>
+			<td>Flag directory:</td>
+			{{#if newCountry}}
+			<td>{{input id="sel_country_flag" value=selectedCountry.c_flag}}</td>
+			{{else}}
+			<td>{{input id="sel_country_flag" value=selectedCountry.c_flag keyUp=(action "checkCountryChange")}}</td>
+			{{/if}}
+		</tr>
+		<tr>
+			{{#if newCountry}}
+			<td><button id="save_ch_country" {{action "saveChanges" "country"}}>Save changes</button></td>
+			{{else}}
+			<td><button id="save_ch_country" disabled {{action "saveChanges" "country"}}>Save changes</button></td>
+			{{/if}}
+			<td><button {{action "discardChanges" "country"}}>Discard changes</button></td>
+		</tr>
+		{{#if selectedCountry.c_id}}
+		<tr>
+			<td>&nbsp;</td>
+			<td><button class="important_func" {{action "deleteCountry"}}>Delete country</button></td>
+		</tr>
+		{{/if}}
+		{{#if countryLoading}}
+		<tr>
+			<td colspan="2" style="text-align:center"><img src="loading.gif" style="width:50px" /></td>
+		</tr>
+		{{/if}}
+		{{else}}
+		<tr>
+			<td colspan="2">
+				<select id="ch_country_select" onChange={{action "loadCountry"}}>
+					<option selected disabled>Choose an option</option>
+					<option id="country-1">Create new country</option>
+					{{#each countryList as |c|}}
+						<option id="country{{c.c_id}}" style="background-image:url({{c.c_flag}})">{{c.c_name}}</option>
+					{{/each}}
+				</select>
+			</td>
+		</tr>
+		{{/if}}
+	</table>
+	<div id="country_error_wrap" class="error_dsp_wrap"><span id="country_success" class="success_dsp" /><span id="country_error" class="error_dsp" /></div>
+</div>
+<hr />
+<div id="league_mgm_h" class="panel_block_header" {{action "toggleElement" "#league_mgm_h"}}>
+	League management<img class="expand_arrow" src="arrow.png" style="width:25px;"/>
+</div>
+<div id="league_mgm_c" class="panel_block_content">
+	<table class="admin_panel_table">
+		{{#unless selectedLeague}}
+			<tr>
+				<td>
+					<select id="ch_lcountry_select" onChange={{action "showLeagues"}}>
+						<option selected disabled>Choose an option</option>
+						{{#each countryList as |c|}}
+							<option id="lcountry{{c.c_id}}" style="background-image:url({{c.c_flag}})">{{c.c_name}}</option>
+						{{/each}}
+					</select>
+				</td>
+			</tr>
+			{{#if countryLeagues}}
+				<tr>
+					<td>
+						<select id="ch_league_select" onChange={{action "loadLeague"}}>
+							<option selected disabled>Choose an option</option>
+							<option id="league-1">Create new league in {{selectedLCountry.c_name}}</option>
+							{{#each countryLeagues as |l|}}
+								<option id="league{{l.l_id}}">{{l.l_name}}</option>
+							{{/each}}
+						</select>
+					</td>
+				</tr>
+			{{/if}}
+		{{else}}
+			<tr>
+				<td>Name:</td>
+				{{#if newLeague}}
+				<td>{{input id="sel_league_name" value=selectedLeague.l_name}}</td>
+				{{else}}
+				<td>{{input id="sel_league_name" value=selectedLeague.l_name keyUp=(action "checkLeagueChange")}}</td>
+				{{/if}}
+			</tr>
+			<tr>
+				<td>Logo:</td>
+				{{#if newLeague}}
+				<td>{{input id="sel_league_logo" value=selectedLeague.l_logo}}</td>
+				{{else}}
+				<td>{{input id="sel_league_logo" value=selectedLeague.l_logo keyUp=(action "checkLeagueChange")}}</td>
+				{{/if}}
+			</tr>
+			{{#unless newLeague}}
+			<tr>
+				<td>Country:</td>
+				<td>
+					<select id="sel_league_country" onChange={{action "checkLeagueChange"}}>
+					{{#each countryList as |c|}}
+						{{#if (ifEqual c.c_id selectedLeague.l_country)}}
+						<option selected value="{{c.c_id}}">{{c.c_name}}</option>
+						{{else}}
+						<option value="{{c.c_id}}">{{c.c_name}}</option>
+						{{/if}}
+					{{/each}}
+					</select>
+				</td>
+			</tr>
+			{{/unless}}
+			<tr>
+				{{#if newLeague}}
+				<td><button id="save_ch_league" {{action "saveChanges" "league"}}>Save changes</button></td>
+				{{else}}
+				<td><button id="save_ch_league" disabled {{action "saveChanges" "league"}}>Save changes</button></td>
+				{{/if}}
+				<td><button {{action "discardChanges" "league"}}>Discard changes</button></td>
+			</tr>
+			{{#if selectedLeague.l_id}}
+			<tr>
+				<td>&nbsp;</td>
+				<td><button class="important_func" {{action "deleteLeague"}}>Delete league</button></td>
+			</tr>
+			{{/if}}
+			{{#if leagueLoading}}
+			<tr>
+				<td colspan="2" style="text-align:center"><img src="loading.gif" style="width:50px" /></td>
+			</tr>
+			{{/if}}
+		{{/unless}}
+	</table>
+	<div id="league_error_wrap" class="error_dsp_wrap"><span id="league_success" class="success_dsp" /><span id="league_error" class="error_dsp" /></div>
+</div>
+
+{{yield}}

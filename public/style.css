@@ -28,6 +28,18 @@
 	padding:7px;
 }
 
+#tab_container {
+	display: block;
+	text-align:left;
+}
+
+#content_container {
+	margin-top: -1px;
+	border:1px solid #E0E0E0;
+	padding-top: 20px;
+	padding-bottom: 20px;
+}
+
 table td:last-child {
 	text-align:right;
 }
@@ -171,6 +183,24 @@ button.important_func {
 	text-align:left;
 	box-sizing: border-box;
 	line-height: 170%;
+}
+
+.tab_element {
+	display: inline-block;
+	font-family: 'Korolev Light';
+	font-size: 15px;
+	color: #00ACC1;
+	border: 1px solid #E0E0E0;
+	border-bottom: 0;
+	border-top-left-radius:3px;
+	border-top-right-radius:3px;
+	padding: 5px;
+	margin:0;
+	cursor: pointer;
+}
+
+.selected_tab {
+	border-bottom: 1px solid white;
 }
 
 button {

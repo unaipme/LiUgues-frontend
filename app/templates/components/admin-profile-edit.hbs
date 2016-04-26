@@ -1,0 +1,52 @@
+<div id="ch_pass_h" class="panel_block_header" {{action "toggleElement" "#ch_pass_h"}}>
+	Change password<img class="expand_arrow" src="arrow.png" style="width:25px;"/>
+</div>
+<div id="ch_pass_c" class="panel_block_content">
+	<table id="ch_pass_table" class="admin_panel_table">
+		<tr>
+			<td><label for="ch_pass_old_pass">Current password:</label></td>
+			<td>{{input type="password" id="ch_pass_old_pass" enter="changePassword"}}</td>
+		</tr>
+		<tr>
+			<td><label for="ch_pass_new_pass">New password:</label></td>
+			<td>{{input type="password" id="ch_pass_new_pass" enter="changePassword"}}</td>
+		</tr>
+		<tr>
+			<td><label for="ch_pass_conf_pass">Confirm password:</label></td>
+			<td>{{input type="password" id="ch_pass_conf_pass" enter="changePassword"}}</td>
+		</tr>
+		<tr>
+			<td colspan="2"><button {{action "changePassword"}}>Save changes</button></td>
+		</tr>
+	</table>
+	<div id="ch_pass_error_wrap" class="error_dsp_wrap"><span id="ch_pass_success" class="success_dsp" /><span id="ch_pass_error" class="error_dsp" /></div>
+</div>
+<hr />
+<div id="user_reg_h" class="panel_block_header" {{action "toggleElement" "#user_reg_h"}}>
+	Register new user<img class="expand_arrow" src="arrow.png" style="width:25px;"/>
+</div>
+<div id="user_reg_c" class="panel_block_content">
+	<table id="register_table" class="admin_panel_table">
+		<tr>
+			<td colspan="2"><div class="info_block">To register a new user, fill in the username. Then generate the password and give it to the new user.</div></td>
+		</tr>
+		<tr>
+			<td><label for="reg_new_username">Username:</label></td>
+			<td>{{input id="reg_new_username"}}</td>
+		</tr>
+		<tr>
+			<td>{{input disabled=true id="reg_new_password" value="Password"}}</td>
+			<td><button {{action "generatePassword"}}>Generate password</button></td>
+		</tr>
+		<tr>
+			{{#unless registerAllowed}}
+			<td colspan="2"><button disabled>Register</button></td>
+			{{else}}
+			<td colspan="2"><button {{action "register"}}>Register</button></td>
+			{{/unless}}
+		</tr>
+	</table>
+	<div id="reg_error_wrap" class="error_dsp_wrap"><span id="reg_success" class="success_dsp" /><span id="reg_error" class="error_dsp" /></div>
+</div>
+
+{{yield}}
