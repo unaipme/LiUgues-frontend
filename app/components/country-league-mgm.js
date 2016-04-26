@@ -72,41 +72,95 @@ export default Ember.Component.extend({
 				}
 			});
 		},
-		deleteLeague() {
-			if (!confirm("Are you sure you want to delete "+this.get("selectedLeague").l_name+"?")) {
-				return;
-			}
-			var id = this.get("selectedLeague").l_id;
+		deleteElement(f) {
+			var name, ajaxURL;
+			var data;
+			var checkFunc, successFunc, errorFunc;
 			var self = this;
-			if (this.get("leagueLoading")) {
-				this.send("showMessage", "country_error", "The connection is now busy. Try again.");
+			switch (f) {
+				case "league":
+					name = self.get("selectedLeague").l_name;
+					ajaxURL = "https://liugues-api.herokuapp.com/p/del_league";
+					data = {l_id: self.get("selectedLeague").l_id};
+					checkFunc = function() {
+						if (self.get("leagueLoading")) {
+							self.send("showMessage", "country_error", "The connection is now busy. Try again.");
+							return false;
+						}
+						self.set("leagueLoading", true);
+						return true;
+					};
+					successFunc = function(data) {
+						if (data.error) {
+							self.send("showMessage", "league_error", data.msg);
+							return;
+						}
+						self.send("showMessage", "league_success", data.msg);
+						setTimeout(function() {
+							window.location.reload();
+						}, 1500);
+						self.set("leagueLoading", false);
+						self.set("selectedLeague", null);
+						self.set("newLeague", false);
+					};
+					errorFunc = function() {
+						self.send("showMessage", "league_error", "An unknown error occurred");
+						self.set("leagueLoading", false);
+						self.set("selectedLeague", null);
+						self.set("newLeague", false);
+					};
+				break;
+				case "country":
+					name = self.get("selectedCountry").c_name;
+					ajaxURL = "https://liugues-api.herokuapp.com/p/del_country";
+					data = {c_id: self.get("selectedCountry").c_id};
+					checkFunc = function() {
+						if (self.get("countryLoading")) {
+							self.send("showMessage", "country_error", "The connection is now busy. Try again.");
+							return false;
+						}
+						self.set("countryLoading", true);
+						return true;
+					};
+					successFunc = function(data) {
+						if (data.error) {
+							self.send("showMessage", "country_error", data.msg);
+							return;
+						}
+						self.send("showMessage", "country_success", data.msg);
+						setTimeout(function() {
+							window.location.reload();
+						}, 1500);
+						self.set("countryLoading", false);
+						self.set("selectedCountry", null);
+						self.set("newCountry", false);
+					};
+					errorFunc = function() {
+						self.send("showMessage", "country_error", "An unknown error occurred");
+						self.set("countryLoading", false);
+						self.set("selectedCountry", null);
+						self.set("newCountry", false);
+					};
+				break;
+			}
+			if (!confirm("Are you sure you want to delete "+name+"?")) {
 				return;
 			}
-			this.set("leagueLoading", true);
-			Ember.$.ajax("https://liugues-api.herokuapp.com/p/del_league", {
+			if (!(checkFunc || function(){return false;})()) {
+				return;
+			}
+			Ember.$.ajax(ajaxURL, {
 				method: "POST",
-				data: {l_id: id},
+				data: data,
 				success: function(data) {
-					if (data.error) {
-						self.send("showMessage", "league_error", data.msg);
-						return;
-					}
-					self.send("showMessage", "league_success", data.msg);
-					setTimeout(function() {
-						window.location.reload();
-					}, 1500);
-					self.set("leagueLoading", false);
-					self.set("selectedLeague", null);
-					self.set("newLeague", false);
+					successFunc(data);
 				},
 				error: function() {
-					self.send("showMessage", "league_error", "An unknown error occurred");
-					self.set("leagueLoading", false);
-					self.set("selectedLeague", null);
-					self.set("newLeague", false);
+					errorFunc();
 				}
 			});
-		},
+			
+		},		
 		checkCountryChange() {
 			var nn = this.get("selectedCountry").c_name;
 			var on = this.get("countryList")[this.get("selectedCountryIndex")].c_name;

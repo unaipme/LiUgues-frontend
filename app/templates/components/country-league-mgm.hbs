@@ -31,7 +31,7 @@
 		{{#if selectedCountry.c_id}}
 		<tr>
 			<td>&nbsp;</td>
-			<td><button class="important_func" {{action "deleteCountry"}}>Delete country</button></td>
+			<td><button class="important_func" {{action "deleteElement" "country"}}>Delete country</button></td>
 		</tr>
 		{{/if}}
 		{{#if countryLoading}}
@@ -129,7 +129,7 @@
 			{{#if selectedLeague.l_id}}
 			<tr>
 				<td>&nbsp;</td>
-				<td><button class="important_func" {{action "deleteLeague"}}>Delete league</button></td>
+				<td><button class="important_func" {{action "deleteElement" "league"}}>Delete league</button></td>
 			</tr>
 			{{/if}}
 			{{#if leagueLoading}}
