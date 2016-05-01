@@ -11,10 +11,16 @@ export default Ember.Component.extend({
 	goToLogin: null,
 	countryList: null,
 	leagueList: null,
+	seasonList: null,
 	init: function() {
 		this._super();
-		var tasks = 3;
+		var tasks = 4;
 		var self = this;
+		var complete = function() {
+			if (--tasks===0) {
+				self.set("isLoading", false);
+			}
+		};
 		Ember.$.ajax("https://liugues-api.herokuapp.com/g/users", {
 			method: "GET",
 			data: {token: self.get("token")},
@@ -26,43 +32,29 @@ export default Ember.Component.extend({
 				} else {
 					self.set("user_pic", "unknown.gif");
 				}
-				if (--tasks===0) {
-					self.set("isLoading", false);
-				}
 			},
-			error: function() {
-				if (--tasks===0) {
-					self.set("isLoading", false);
-				}
-			}
+			complete: complete
 		});
 		Ember.$.ajax("https://liugues-api.herokuapp.com/g/countries", {
 			method: "GET",
 			success: function(data) {
 				self.set("countryList", data);
-				if (--tasks===0) {
-					self.set("isLoading", false);
-				}
 			},
-			error: function() {
-				if (--tasks===0) {
-					self.set("isLoading", false);
-				}
-			}
+			complete: complete
 		});
 		Ember.$.ajax("https://liugues-api.herokuapp.com/g/leagues", {
 			method: "GET",
 			success: function(data) {
 				self.set("leagueList", data);
-				if (--tasks===0) {
-					self.set("isLoading", false);
-				}
 			},
-			error: function() {
-				if (--tasks===0) {
-					self.set("isLoading", false);
-				}
-			}
+			complete: complete
+		});
+		Ember.$.ajax("https://liugues-api.herokuapp.com/g/seasons", {
+			method: "GET",
+			success: function(data) {
+				self.set("seasonList", data);
+			},
+			complete: complete
 		});
 	},
 	actions: {

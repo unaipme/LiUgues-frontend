@@ -141,5 +141,71 @@
 	</table>
 	<div id="league_error_wrap" class="error_dsp_wrap"><span id="league_success" class="success_dsp" /><span id="league_error" class="error_dsp" /></div>
 </div>
+<hr />
+<div id="season_mgm_h" class="panel_block_header" {{action "toggleElement" "#season_mgm_h"}}>
+	Season management<img class="expand_arrow" src="arrow.png" style="width:25px;"/>
+</div>
+<div id="season_mgm_c" class="panel_block_content">
+	<table class="admin_panel_table">
+		{{#unless selectedSeason}}
+			<tr>
+				<td>
+					<select id="sel_season_league" onChange={{action "showSeasons"}}>
+						<option selected disabled>Select an option</option>
+						{{#each leagueList as |l|}}
+							<option id="sleague{{l.l_id}}">{{l.l_name}}</option>
+						{{/each}}
+					</select>
+				</td>
+			</tr>
+			{{#if leagueSeasons}}
+			<tr>
+				<td>
+					<select id="ch_season_select" onChange={{action "loadSeason"}}>
+						<option disabled selected>Choose an option</option>
+						<option id="season-1">Create new season for {{selectedSLeague.l_name}}</option>
+						{{#each leagueSeasons as |s|}}
+							<option id="season{{s.s_id}}">{{s.s_desc}} ({{s.s_year}})</option>
+						{{/each}}
+					</select>
+				</td>
+			</tr>
+			{{/if}}
+		{{else}}
+			<tr>
+				<td>League:</td>
+				<td>{{selectedSLeague.l_name}}</td>
+			</tr>
+			<tr>
+				<td>Year:</td>
+				{{#if newSeason}}
+				<td>{{input type="number" id="sel_season_name" value=selectedSeason.s_year}}</td>
+				{{else}}
+				<td>{{input type="number" id="sel_season_name" value=selectedSeason.s_year}}</td>
+				{{/if}}
+			</tr>
+			<tr>
+				<td>Description</td>
+				<td>{{input id="sel_season_desc" disabled=true value=(concat selectedSLeague.l_name " " selectedSeason.s_year)}}</td>
+			</tr>
+			<tr>
+				<td><button id="save_ch_season" {{action "saveChanges" "season"}}>Save changes</button></td>
+				<td><button {{action "discardChanges" "season"}}>Discard changes</button></td>
+			</tr>
+			{{#if selectedSeason.s_id}}
+			<tr>
+				<td>&nbsp;</td>
+				<td><button class="important_func" {{action "deleteElement" "season"}}>Delete country</button></td>
+			</tr>
+			{{/if}}
+			{{#if seasonLoading}}
+			<tr>
+				<td colspan="2" style="text-align:center"><img src="loading.gif" style="width:50px" /></td>
+			</tr>
+			{{/if}}
+		{{/unless}}
+	</table>
+	<div id="season_error_wrap" class="error_dsp_wrap"><span id="season_success" class="success_dsp" /><span id="season_error" class="error_dsp" /></div>
+</div>
 
 {{yield}}

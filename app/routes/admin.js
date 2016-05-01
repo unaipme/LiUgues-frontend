@@ -5,7 +5,7 @@ export default Ember.Route.extend({
 		var model = {};
 		var tkn = tr.token;
 		var self = this;
-		Ember.$.ajax("http://liugues-api.herokuapp.com/p/check_user", {
+		Ember.$.ajax("https://liugues-api.herokuapp.com/p/check_user", {
 			method: "POST",
 			data: {token: tkn},
 			success: function(data) {

@@ -1,17 +1,34 @@
 import Ember from 'ember';
 
 export default Ember.Component.extend({
+	countryList: null,
+	leagueList: null,
+	seasonList: null,
 	toggleElement: null,
 	showMessage: null,
 	countryLeagues: null,
+	leagueSeasons: null,
 	selectedCountry: null,
 	selectedCountryIndex: -1,
 	selectedLeague: null,
 	selectedLeagueIndex: -1,
+	selectedSeason: null,
+	selectedSeasonIndex: -1,
 	selectedLCountry: null,
-	countryList: null,
-	leagueList: null,
+	selectedSLeague: null,
 	connectionBusy: false,
+	newCountry: false,
+	newLeague: false,
+	newSeason: false,
+	countryLoading: false,
+	seasonLoading: false,
+	injectionCheck: function(txt) {
+		if ((typeof txt) !== 'string') return false;
+		if (txt.indexOf("\"") !== -1 || txt.indexOf("'") !== -1 || txt.indexOf("\\") !== -1 || txt.indexOf(";") !== -1) {
+			return true;
+		}			
+		return false;
+	},
 	actions: {
 		toggleElement(id) {
 			this.get("toggleElement")(id);
@@ -26,6 +43,9 @@ export default Ember.Component.extend({
 			var lc = this.get("countryList").filter(function(i) {
 				return i.c_id === id;
 			})[0];
+			if (this.get("selectedLCountry") !== null) {
+				Ember.$("#ch_league_select")[0].options[0].selected = true;
+			}
 			this.set("selectedLCountry", lc);
 			var r = this.get("leagueList").filter(function(i){
 				return i.l_country === id;
@@ -35,42 +55,26 @@ export default Ember.Component.extend({
 			} else {
 				this.set("countryLeagues", r);
 			}
-			Ember.$("#ch_league_select")[0].options[0].selected = true;
 		},
-		deleteCountry() {
-			if (!confirm("Are you sure you want to delete "+this.get("selectedCountry").c_name+"?")) {
-				return;
-			}
-			var id = this.get("selectedCountry").c_id;
-			var self = this;
-			if (this.get("countryLoading")) {
-				this.send("showMessage", "country_error", "The connection is now busy. Try again.");
-				return;
-			}
-			this.set("countryLoading", true);
-			Ember.$.ajax("https://liugues-api.herokuapp.com/p/del_country", {
-				method: "POST",
-				data: {c_id: id},
-				success: function(data) {
-					if (data.error) {
-						self.send("showMessage", "country_error", data.msg);
-						return;
-					}
-					self.send("showMessage", "country_success", data.msg);
-					setTimeout(function() {
-						window.location.reload();
-					}, 1500);
-					self.set("countryLoading", false);
-					self.set("selectedCountry", null);
-					self.set("newCountry", false);
-				},
-				error: function() {
-					self.send("showMessage", "country_error", "An unknown error occurred");
-					self.set("countryLoading", false);
-					self.set("selectedCountry", null);
-					self.set("newCountry", false);
-				}
+		showSeasons(event) {
+			var t = event.target;
+			var e = t.options[t.selectedIndex];
+			var id = parseInt(e.id.substr("sleague".length));
+			var ss = this.get("seasonList").filter(function(i) {
+				return i.s_league === id;
 			});
+			var l = this.get("leagueList").filter(function(i) {
+				return i.l_id === id;
+			})[0];
+			if (this.get("selectedSLeague") !== null) {
+				//Ember.$("#ch_league_select")[0].options[0].selected = true;
+			}
+			this.set("selectedSLeague", l);
+			if (ss.length === 0) {
+				this.set("leagueSeasons", {});
+			} else {
+				this.set("leagueSeasons", ss);
+			}
 		},
 		deleteElement(f) {
 			var name, ajaxURL;
@@ -142,6 +146,38 @@ export default Ember.Component.extend({
 						self.set("newCountry", false);
 					};
 				break;
+				case "season":
+					name = Ember.$("#sel_season_desc")[0].value;
+					ajaxURL = "https://liugues-api.herokuapp.com/p/del_season";
+					data = {s_id: self.get("selectedSeason").s_id};
+					checkFunc = function() {
+						if (self.get("seasonLoading")) {
+							self.send("showMessage", "country_error", "The connection is now busy. Try again.");
+							return false;
+						}
+						self.set("seasonLoading", true);
+						return true;
+					};
+					successFunc = function(data) {
+						if (data.error) {
+							self.send("showMessage", "season_error", data.msg);
+							return;
+						}
+						self.send("showMessage", "season_success", data.msg);
+						setTimeout(function() {
+							window.location.reload();
+						}, 1500);
+						self.set("seasonLoading", false);
+						self.set("selectedSeason", null);
+						self.set("newSeason", false);
+					};
+					errorFunc = function() {
+						self.send("showMessage", "season_error", "An unknown error occurred");
+						self.set("seasonLoading", false);
+						self.set("selectedSeason", null);
+						self.set("newSeason", false);
+					};
+				break;
 			}
 			if (!confirm("Are you sure you want to delete "+name+"?")) {
 				return;
@@ -159,7 +195,6 @@ export default Ember.Component.extend({
 					errorFunc();
 				}
 			});
-			
 		},		
 		checkCountryChange() {
 			var nn = this.get("selectedCountry").c_name;
@@ -193,46 +228,24 @@ export default Ember.Component.extend({
 			var ajaxURL, errorID;
 			var checkFunc, beforeFunc, successFunc, errorFunc;
 			switch (f) {
-				/* TEMPLATE */
-				/*
-				case CASE:
-					data = {
-						
-					};
-					checkFunc = function() {
-						//check all needed information is there
-						//if everything's right then
-						return true;
-						//else
-						return false;
-					};
-					errorID = "ID of error displaying element (Usually CASE_error)";
-					beforeFunc = function() {
-						//Some stuff to do before the ajax request
-					};
-					ajaxURL = "URL to which perform AJAX request";
-					successFunc = function(data) {
-						//Function to be called if request is successful.
-						//Data parameters is response for the request
-					}
-					errorFunc = function() {
-						//Error handling
-					}
-					break;
-				*/
 				case "country":
 					data = {
-						c_name: this.get("selectedCountry").c_name,
-						c_flag: this.get("selectedCountry").c_flag
+						c_name: self.get("selectedCountry").c_name,
+						c_flag: self.get("selectedCountry").c_flag
 					};
+					errorID = "country_error";
 					checkFunc = function() {
 						if (!data.c_name || data.c_name === "") {
-							this.send("showMessage", "country_error", "You have to fill the name field.");
+							self.send("showMessage", errorID, "You have to fill the name field.");
+							return false;
+						}
+						var ic = self.get("injectionCheck");
+						if (ic(data.c_name) || ic(data.c_flag)) {
+							self.send("showMessage", errorID, "You can't use any of the following characters: \\ \" ; '");
 							return false;
 						}
 						return true;
 					};
-					errorID = "country_error";
 					beforeFunc = function() {
 						if (self.get("selectedCountryIndex") !== -1) {
 							var r = self.get("countryList")[self.get("selectedCountryIndex")];
@@ -256,24 +269,29 @@ export default Ember.Component.extend({
 				case "league":
 					var l_country;
 					if (!Ember.$("#sel_league_country")[0]) {
-						l_country = this.get("selectedLCountry").c_id;
+						l_country = self.get("selectedLCountry").c_id;
 					} else {
 						l_country = parseInt(Ember.$("#sel_league_country")[0].value);
 					}
 					data = {
-						l_name: this.get("selectedLeague").l_name,
-						l_logo: this.get("selectedLeague").l_logo,
+						l_name: self.get("selectedLeague").l_name,
+						l_logo: self.get("selectedLeague").l_logo,
 						l_country: l_country
 					};
 					ajaxURL = "https://liugues-api.herokuapp.com/p/ch_league";
 					errorID = "league_error";
 					checkFunc = function(){
 						if (!data.l_name || data.l_name === "") {
-							this.send("showMessage", errorID, "You have to fill the name field.");
+							self.send("showMessage", errorID, "You have to fill the name field.");
 							return false;
 						}
 						if (!data.l_country) {
-							this.send("showMessage", errorID, "You have to choose a country.");
+							self.send("showMessage", errorID, "You have to choose a country.");
+							return false;
+						}
+						var ic = self.get("injectionCheck");
+						if (ic(data.l_name) || ic(data.l_logo)) {
+							self.send("showMessage", errorID, "You can't use any of the following characters: \\ \" ; '");
 							return false;
 						}
 						return true;
@@ -295,6 +313,45 @@ export default Ember.Component.extend({
 					errorFunc = function(){
 						self.send("showMessage", errorID, "An error occurred when trying to connect to the database");
 						self.set("leagueLoading", false);
+					};
+					break;
+				case "season":
+					data = {
+						s_desc: Ember.$("#sel_season_desc")[0].value,
+						s_year: self.get("selectedSeason").s_year,
+						s_league: self.get("selectedSLeague").l_id
+					};
+					errorID = "season_error";
+					checkFunc = function() {
+						if (!data.s_desc || data.s_desc === "" || !data.s_year) {
+							self.send("showMessage", errorID, "You have to specify a year");
+							return false;
+						}
+						var ic = self.get("injectionCheck");
+						if (ic(data.s_year) || ic(data.s_desc)) {
+							self.send("showMessage", errorID, "You can't use any of the following characters: \\ \" ; '");
+							return false;
+						}
+						return true;
+					};
+					beforeFunc = function() {
+						if (self.get("selectedSeasonIndex") !== -1) {
+							var r = self.get("seasonList")[self.get("selectedSeasonIndex")];
+							data.s_id = r.s_id;
+						}
+						self.set("seasonLoading", true);
+					};
+					ajaxURL = "https://liugues-api.herokuapp.com/p/ch_season";
+					successFunc = function(data) {
+						self.send("showMessage", "season_success", data.msg);
+						setTimeout(function() {
+							window.location.reload();
+						}, 1500);
+						self.set("seasonLoading", false);
+					};
+					errorFunc = function() {
+						self.send("showMessage", "season_error", "An error occurred when trying to connect to the database");
+						self.set("seasonLoading", false);
 					};
 					break;
 			}
@@ -332,9 +389,16 @@ export default Ember.Component.extend({
 					this.set("newCountry", false);
 					break;
 				case "league":
+					this.set("selectedLCountry", null);
 					this.set("selectedLeague", null);
 					this.set("newLeague", false);
 					this.set("countryLeagues", null);
+					break;
+				case "season":
+					this.set("selectedSLeague", null);
+					this.set("newSeason", false);
+					this.set("selectedSeason", null);
+					this.set("leagueSeasons", null);
 					break;
 			}
 		},
@@ -404,6 +468,42 @@ export default Ember.Component.extend({
 						this.set("selectedLeagueIndex", n);
 					} else {
 						this.set("selectedLeague", {});
+					}
+				}
+			} else {
+				this.set("selectedLeague", null);
+			}
+		},
+		loadSeason(event) {
+			var t = event.target;
+			var e = t.options[t.selectedIndex];
+			var id = parseInt(e.id.substr("season".length));
+			if (id !== undefined) {
+				if (id === -1) {
+					this.set("selectedSeason", {s_id: "", s_desc: "", s_year: "", s_league: ""});
+					this.set("selectedSeasonIndex", -1);
+					this.set("newSeason", true);
+				} else {
+					var s = null;
+					var n = -1;
+					var list = this.get("seasonList");
+					for (var a in list) {
+						if (list[a].s_id === id) {
+							s = list[a];
+							n = a;
+							break;
+						}
+					}
+					if (s !== null) {
+						this.set("selectedSeason", {
+							s_id: s.s_id,
+							s_desc: s.s_desc,
+							s_year: s.s_year,
+							s_league: s.s_league
+						});
+						this.set("selectedSeasonIndex", n);
+					} else {
+						this.set("selectedSeason", {});
 					}
 				}
 			} else {
