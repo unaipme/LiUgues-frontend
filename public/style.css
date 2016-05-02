@@ -104,6 +104,24 @@ table.admin_panel_table {
 	border-spacing: 10px;
 }
 
+table.admin_panel_table td{
+	vertical-align: middle;
+}
+
+table.team_list_table {
+	width: 100%;
+	border-spacing: 10px;
+}
+
+table.team_list_table td {
+	text-align:center;
+	width: 50%;
+}
+
+table.team_list_table button {
+	font-size: 13px;
+}
+
 button.important_func {
 	background-color: #F44336;
 	color: white;
@@ -149,7 +167,16 @@ button.important_func {
 	color:#00ACC1;
 }
 
+.letter_header {
+	width:90%;
+}
+
 .expand_arrow {
+	float:right;
+	transition: 0.5s transform;
+}
+
+.expand_arrow2 {
 	float:right;
 	transition: 0.5s transform;
 }
@@ -166,6 +193,15 @@ button.important_func {
 	font-family:'Slabo 27px', arial;
 	padding:6px;
 	color: #212121;
+}
+
+.team_list_content {
+	display:none;
+	width:80%;
+}
+
+.letter_content {
+	width: 90%;
 }
 
 .error_dsp_wrap {
@@ -212,6 +248,32 @@ button.important_func {
 
 .selected_tab {
 	border-bottom: 1px solid white;
+}
+
+.team_list_header {
+	margin:7px;
+	border-bottom: 1px solid #E0E0E0;
+	text-align:left;
+	width:80%;
+	cursor: pointer;
+}
+
+.crest_check {
+	width:34px;
+	border:1px solid #e0e0e0;
+}
+
+.team_list_header span {
+	font-family: 'Korolev Light';
+	color: #212121;
+	font-size: 15px;
+	line-height:0%;
+}
+
+.team_list_header img {
+	width:20px;
+	padding-left:5px;
+	padding-right:5px;
 }
 
 button {

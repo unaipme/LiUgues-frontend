@@ -1,0 +1,80 @@
+<div id="team_mgm_h" class="panel_block_header" {{action "toggleElement" "#team_mgm_h"}}>
+	Team management<img class="expand_arrow" src="arrow.png" style="width:25px;"/>
+</div>
+<div id="team_mgm_c" class="panel_block_content">
+	{{#unless selectedTeam}}
+		<button {{action "updateTeam" -1}}>Create new team</button>
+		{{#each alphabet as |l|}}
+			{{#if (filterBy teamList l "t_name")}}
+			<div id="teams_starting_{{l}}" class="panel_block_header letter_header" {{action "toggleElement" (concat "#teams_starting_" l)}}>
+				{{l}}<img class="expand_arrow" src="arrow.png" style="width:25px;"/>
+			</div>
+			<div class="panel_block_content letter_content">
+				{{#each (filterBy teamList l "t_name") as |t|}}
+					<div class="team_list_header" id="team_element_{{t.t_id}}" {{action "toggleElement" (concat "#team_element_" t.t_id)}}>
+						<img class="expand_arrow2" src="arrow2.png" style="width:25px"/><img src="{{t.t_crest}}"/><span>{{t.t_name}}</span>
+					</div>
+					<div class="team_list_content">
+						<table class="team_list_table">
+							<tr>
+								<td><button {{action "updateTeam" t.t_id}}>Update information</button></td>
+								<td><button class="important_func" {{action "deleteElement" "team" t.t_id}}>Delete team</button></td>
+							</tr>
+						</table>
+					</div>
+				{{/each}}
+			</div>
+			{{/if}}
+		{{/each}}
+	{{else}}
+		<table class="admin_panel_table">
+			<tr>
+				<td>Name:</td>
+				<td colspan="2">{{input id="sel_team_name" value=selectedTeam.t_name}}</td>
+			</tr>
+			<tr>
+				<td>Crest directory:</td>
+				<td>{{input id="sel_team_crest" value=selectedTeam.t_crest}}</td>
+				<td style="line-height:50%"><img src="{{selectedTeam.t_crest}}" class="crest_check" /></td>
+			</tr>
+			<tr>
+				<td>Country:</td>
+				<td colspan="2">
+					<select id="sel_team_country">
+						{{#if newTeam}}
+							<option selected disabled value="-1">Choose an option</option>
+						{{/if}}
+						{{#each countryList as |c|}}
+							{{#if (ifEqual c.c_id selectedTeam.t_country)}}
+								<option selected value="{{c.c_id}}" style="background-image:url({{c.c_flag}})">{{c.c_name}}</option>
+							{{else}}
+								<option value="{{c.c_id}}" style="background-image:url({{c.c_flag}})">{{c.c_name}}</option>
+							{{/if}}
+						{{/each}}
+					</select>
+				</td>
+			</tr>
+			<tr>
+				<td>Stadium:</td>
+				<td colspan="2">{{input id="sel_team_stadium" value=selectedTeam.t_stadium}}</td>
+			</tr>
+			<tr>
+				<td>City:</td>
+				<td colspan="2">{{input id="sel_team_city" value=selectedTeam.t_city}}</td>
+			</tr>
+			<tr>
+				<td colspan="3">
+					<table style="width:100%">
+					<tr>
+						<td style="text-align:center"><button {{action "saveChanges" "team"}}>Save changes</button></td>
+						<td style="text-align:center"><button {{action "discardChanges" "team"}}>Discard changes</button></td>
+					</tr>
+					</table>
+				</td>
+			</tr>
+		</table>
+	{{/unless}}
+	<div id="team_error_wrap" class="error_dsp_wrap"><span id="team_success" class="success_dsp" /><span id="team_error" class="error_dsp" /></div>
+</div>
+
+{{yield}}

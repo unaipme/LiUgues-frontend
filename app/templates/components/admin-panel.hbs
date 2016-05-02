@@ -20,12 +20,15 @@
 		<div id="tab_container">
 			<div class="tab_element {{if (ifEqual chosenTab 0) "selected_tab"}}" {{action "setTab" 0}}>Profile management</div>
 			<div class="tab_element {{if (ifEqual chosenTab 1) "selected_tab"}}" {{action "setTab" 1}}>Country and league management</div>
+			<div class="tab_element {{if (ifEqual chosenTab 2) "selected_tab"}}" {{action "setTab" 2}}>Team management</div>
 		</div>
 		<div id="content_container">
 			{{#if (ifEqual 0 chosenTab)}}
 				{{admin-profile-edit token=token toggleElement=(action "toggleElement") showMessage=(action "showMessage")}}
 			{{else if (ifEqual 1 chosenTab)}}
 				{{country-league-mgm toggleElement=(action "toggleElement") showMessage=(action "showMessage") countryList=countryList leagueList=leagueList seasonList=seasonList}}
+			{{else if (ifEqual 2 chosenTab)}}
+				{{team-season-mgm toggleElement=(action "toggleElement") showMessage=(action "showMessage") teamList=teamList countryList=countryList leagueList=leagueList}}
 			{{/if}}
 		</div>
 		<hr />

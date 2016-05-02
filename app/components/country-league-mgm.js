@@ -23,7 +23,9 @@ export default Ember.Component.extend({
 	countryLoading: false,
 	seasonLoading: false,
 	injectionCheck: function(txt) {
-		if ((typeof txt) !== 'string') return false;
+		if ((typeof txt) !== 'string') {
+			return false;
+		}
 		if (txt.indexOf("\"") !== -1 || txt.indexOf("'") !== -1 || txt.indexOf("\\") !== -1 || txt.indexOf(";") !== -1) {
 			return true;
 		}			
@@ -168,8 +170,6 @@ export default Ember.Component.extend({
 							window.location.reload();
 						}, 1500);
 						self.set("seasonLoading", false);
-						self.set("selectedSeason", null);
-						self.set("newSeason", false);
 					};
 					errorFunc = function() {
 						self.send("showMessage", "season_error", "An unknown error occurred");
@@ -350,7 +350,7 @@ export default Ember.Component.extend({
 						self.set("seasonLoading", false);
 					};
 					errorFunc = function() {
-						self.send("showMessage", "season_error", "An error occurred when trying to connect to the database");
+						self.send("showMessage", "season_error", "An error occurred when connecting to the database");
 						self.set("seasonLoading", false);
 					};
 					break;
@@ -375,7 +375,7 @@ export default Ember.Component.extend({
 					self.set("connectionBusy", false);
 				},
 				error: function() {
-					(successFunc || function(){
+					(errorFunc || function(){
 						console.log("An error happened");
 					})();
 					self.set("connectionBusy", false);

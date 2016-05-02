@@ -14,7 +14,7 @@ export default Ember.Component.extend({
 	seasonList: null,
 	init: function() {
 		this._super();
-		var tasks = 4;
+		var tasks = 5;
 		var self = this;
 		var complete = function() {
 			if (--tasks===0) {
@@ -53,6 +53,13 @@ export default Ember.Component.extend({
 			method: "GET",
 			success: function(data) {
 				self.set("seasonList", data);
+			},
+			complete: complete
+		});
+		Ember.$.ajax("https://liugues-api.herokuapp.com/g/teams", {
+			method: "GET",
+			success: function(data) {
+				self.set("teamList", data);
 			},
 			complete: complete
 		});
