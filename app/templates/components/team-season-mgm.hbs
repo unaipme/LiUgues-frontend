@@ -76,5 +76,74 @@
 	{{/unless}}
 	<div id="team_error_wrap" class="error_dsp_wrap"><span id="team_success" class="success_dsp" /><span id="team_error" class="error_dsp" /></div>
 </div>
-
+<hr />
+<div id="sign_up_h" class="panel_block_header" {{action "toggleElement" "#sign_up_h"}}>
+	Sign up a team in a season<img class="expand_arrow" src="arrow.png" style="width:25px;"/>
+</div>
+<div id="sign_up_c" class="panel_block_content">
+	<table class="admin_panel_table">
+		{{#unless selectedSUTeam}}
+		<tr>
+			<td>Type the team's name:</td>
+			<td>{{input id="team_search_field" keyUp=(action "searchTeam")}}</td>
+		</tr>
+		<tr>
+			<td colspan="2" style="text-align:center">
+				<div id="matching_team_list">
+					<center>
+						<p>Matches:</p>
+						{{#each matchingList as |t|}}
+							<div class="team_list_header t_in_s_element" id="t_in_s_element_{{t.t_id}}">
+								<img src="{{t.t_crest}}"/><span>{{t.t_name}}</span><button style="float:right" {{action "chooseForSignup" t.t_id}} id="signup_choose_{{t.t_id}}">Choose</button><img src="loading.gif" id="signup_loading_{{t.t_id}}" style="display:none;float:right" />
+							</div>
+						{{/each}}
+					</center>
+				</div>
+			</td>
+		</tr>
+		{{else}}
+		<tr>
+			<td>Team:</td>
+			<td><img src="{{selectedSUTeam.t_crest}}" style="width:20px" /> {{selectedSUTeam.t_name}}</td>
+		</tr>
+		{{#if selectedSUTSeasons}}
+			<tr>
+				<td>Signed up for:</td>
+				<td>
+				{{#each selectedSUTSeasons as |s|}}
+					<p style="margin:4px">{{s.s_desc}} <button class="important_func" style="margin:3px;margin-right:0" {{action "deleteElement" "signup" s.s_id}}>Delete</button></p>
+				{{/each}}
+				</td>
+			</tr>
+		{{else}}
+			<tr>
+				<td colspan="2">Signed up to no seasons</td>
+			</tr>
+		{{/if}}
+		<tr>
+			{{#unless selectedSUTMSeasons}}
+			<td colspan="2">
+				<p>There are no seasons in which the team can sign up</p>
+			</td>
+			{{else}}
+				<td>
+					<select onChange="$('#save_signup_button')[0].disabled = false" id="season_signup_select">
+						<option selected disabled>Choose a season</option>
+						{{#each selectedSUTMSeasons as |ss|}}
+							<option value={{ss.s_id}}>{{ss.s_desc}}</option>
+						{{/each}}
+					</select>
+				</td>
+				<td>
+					<button id="save_signup_button" {{action "saveChanges" "signup"}} disabled>Save changes</button>
+				</td>
+			{{/unless}}
+		</tr>
+		<tr>
+			<td colspan="2"><button {{action "discardChanges" "signup"}}>Discard changes</button></td>
+		</tr>
+		{{/unless}}
+	</table>
+	<div id="signup_error_wrap" class="error_dsp_wrap"><span id="signup_success" class="success_dsp" /><span id="signup_error" class="error_dsp" /></div>
+</div>
 {{yield}}

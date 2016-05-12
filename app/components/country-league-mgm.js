@@ -304,11 +304,15 @@ export default Ember.Component.extend({
 						self.set("leagueLoading", true);
 					};
 					successFunc = function(data){
-						self.send("showMessage", "league_success", data.msg);
-						setTimeout(function() {
-							window.location.reload();
-						}, 1500);
-						self.set("leagueLoading", false);
+						if (data.error) {
+							
+						} else {
+							self.send("showMessage", "league_success", data.msg);
+							setTimeout(function() {
+								window.location.reload();
+							}, 1500);
+							self.set("leagueLoading", false);
+						}
 					};
 					errorFunc = function(){
 						self.send("showMessage", errorID, "An error occurred when trying to connect to the database");
@@ -343,11 +347,15 @@ export default Ember.Component.extend({
 					};
 					ajaxURL = "https://liugues-api.herokuapp.com/p/ch_season";
 					successFunc = function(data) {
-						self.send("showMessage", "season_success", data.msg);
-						setTimeout(function() {
-							window.location.reload();
-						}, 1500);
-						self.set("seasonLoading", false);
+						if (data.error) {
+							
+						} else {
+							self.send("showMessage", "season_success", data.msg);
+							setTimeout(function() {
+								window.location.reload();
+							}, 1500);
+							self.set("seasonLoading", false);
+						}
 					};
 					errorFunc = function() {
 						self.send("showMessage", "season_error", "An error occurred when connecting to the database");

@@ -1,4 +1,9 @@
-{{#if isLoading}}
+{{#if loadingError}}
+<div id="panel_loading_screen"><center>
+	<p>An error happenned when loading the resources. Try again in a moment.</p>
+	<button onClick="window.location.reload()">Try again</button>
+</center></div>
+{{else if isLoading}}
 <div id="panel_loading_screen"><center><img src="loading.gif" /></center></div>
 {{else}}
 	<center>
@@ -28,7 +33,7 @@
 			{{else if (ifEqual 1 chosenTab)}}
 				{{country-league-mgm toggleElement=(action "toggleElement") showMessage=(action "showMessage") countryList=countryList leagueList=leagueList seasonList=seasonList}}
 			{{else if (ifEqual 2 chosenTab)}}
-				{{team-season-mgm toggleElement=(action "toggleElement") showMessage=(action "showMessage") teamList=teamList countryList=countryList leagueList=leagueList}}
+				{{team-season-mgm toggleElement=(action "toggleElement") showMessage=(action "showMessage") teamList=teamList countryList=countryList seasonList=seasonList}}
 			{{/if}}
 		</div>
 		<hr />
