@@ -205,8 +205,6 @@ button.important_func {
 
 .panel_block_content {
 	display:none;
-	/*border:1px solid #E0E0E0;
-	border-top:0;*/
 	width:70%;
 	font-family:'Slabo 27px', arial;
 	padding:6px;
@@ -255,8 +253,9 @@ button.important_func {
 
 .tab_element {
 	display: inline-block;
+	position:relative;
 	font-family: 'Korolev Light';
-	font-size: 15px;
+	font-size: 8px;
 	color: #00ACC1;
 	border: 1px solid #E0E0E0;
 	border-bottom: 0;
@@ -265,9 +264,18 @@ button.important_func {
 	padding: 5px;
 	margin:0;
 	cursor: pointer;
+	transition: font-size 0.5s, bottom 0.5s;
+	bottom: -3px;
+}
+
+.tab_element:hover {
+	font-size: 15px;
+	bottom: 0;
 }
 
 .selected_tab {
+	font-size: 15px;
+	bottom:0;
 	border-bottom: 1px solid white;
 }
 
