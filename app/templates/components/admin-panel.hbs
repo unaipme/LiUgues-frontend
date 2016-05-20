@@ -31,7 +31,7 @@
 			{{#if (ifEqual 0 chosenTab)}}
 				{{admin-profile-edit token=token toggleElement=(action "toggleElement") showMessage=(action "showMessage")}}
 			{{else if (ifEqual 1 chosenTab)}}
-				{{country-league-mgm toggleElement=(action "toggleElement") showMessage=(action "showMessage") countryList=countryList leagueList=leagueList seasonList=seasonList}}
+				{{country-league-mgm toggleElement=(action "toggleElement") showMessage=(action "showMessage") countryList=countryList leagueList=leagueList seasonList=seasonList roundList=roundList}}
 			{{else if (ifEqual 2 chosenTab)}}
 				{{team-season-mgm toggleElement=(action "toggleElement") showMessage=(action "showMessage") teamList=teamList countryList=countryList seasonList=seasonList}}
 			{{/if}}

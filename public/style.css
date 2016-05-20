@@ -189,6 +189,20 @@ button.important_func {
 	transform: rotate(-180deg);
 }
 
+.left_arrow {
+	transform: rotate(90deg);
+	float:left;
+	position: relative;
+	top: -3px;
+}
+
+.right_arrow {
+	transform: rotate(270deg);
+	float: right;
+	position: relative;
+	top: -3px;
+}
+
 .panel_block_content {
 	display:none;
 	/*border:1px solid #E0E0E0;
@@ -199,8 +213,11 @@ button.important_func {
 	color: #212121;
 }
 
-.team_list_content {
+.exp_subsection_c {
 	display:none;
+}
+
+.team_list_content {
 	width:80%;
 }
 
@@ -254,12 +271,15 @@ button.important_func {
 	border-bottom: 1px solid white;
 }
 
-.team_list_header {
+.exp_subsection_h {
 	margin:7px;
 	border-bottom: 1px solid #E0E0E0;
 	text-align:left;
-	width:80%;
 	cursor: pointer;
+}
+
+.team_list_header {
+	width:80%;
 }
 
 .crest_check {

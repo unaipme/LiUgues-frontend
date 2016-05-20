@@ -11,10 +11,10 @@
 			</div>
 			<div class="panel_block_content letter_content">
 				{{#each (filterBy teamList l "t_name") as |t|}}
-					<div class="team_list_header" id="team_element_{{t.t_id}}" {{action "toggleElement" (concat "#team_element_" t.t_id)}}>
+					<div class="exp_subsection_h team_list_header" id="team_element_{{t.t_id}}" {{action "toggleElement" (concat "#team_element_" t.t_id)}}>
 						<img class="expand_arrow2" src="arrow2.png" style="width:25px"/><img src="{{t.t_crest}}"/><span>{{t.t_name}}</span>
 					</div>
-					<div class="team_list_content">
+					<div class="exp_subsection_c team_list_content">
 						<table class="team_list_table">
 							<tr>
 								<td><button {{action "updateTeam" t.t_id}}>Update information</button></td>
@@ -93,7 +93,7 @@
 					<center>
 						<p>Matches:</p>
 						{{#each matchingList as |t|}}
-							<div class="team_list_header t_in_s_element" id="t_in_s_element_{{t.t_id}}">
+							<div class="exp_subsection_h team_list_header t_in_s_element" id="t_in_s_element_{{t.t_id}}">
 								<img src="{{t.t_crest}}"/><span>{{t.t_name}}</span><button style="float:right" {{action "chooseForSignup" t.t_id}} id="signup_choose_{{t.t_id}}">Choose</button><img src="loading.gif" id="signup_loading_{{t.t_id}}" style="display:none;float:right" />
 							</div>
 						{{/each}}

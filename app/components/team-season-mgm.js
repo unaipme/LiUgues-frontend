@@ -64,6 +64,7 @@ export default Ember.Component.extend({
 						t_city: this.get("selectedTeam").t_city
 					};
 					ajaxURL = "https://liugues-api.herokuapp.com/p/ch_team";
+					//ajaxURL = "http://localhost:5000/p/ch_team";
 					errorID = "team_error";
 					checkFunc = function() {
 						if (!data.t_name || data.t_name === "") {
@@ -156,6 +157,7 @@ export default Ember.Component.extend({
 			switch (f) {
 				case "team":
 					ajaxURL = "https://liugues-api.herokuapp.com/p/del_team";
+					//ajaxURL = "http://localhost:5000/p/del_team";
 					var t = this.get("teamList").filter(function(i) {
 						return i.t_id === id;
 					})[0];
@@ -255,13 +257,12 @@ export default Ember.Component.extend({
 				method: "GET",
 				data: {t_id: id},
 				success: function(data) {
-					self.set("selectedSUTeam", data);
-					self.set("selectedSUTSeasons", data.seasons);
+					console.log(data.data);
+					self.set("selectedSUTeam", data.data);
+					self.set("selectedSUTSeasons", data.data.seasons);
 					var sutms = self.get("seasonList").filter(function(e) {
-						var s = data.seasons;
-						console.log(e);
-						if (e.l_country !== data.t_country) return false;
-						console.log("SAME COUNTRY");
+						var s = data.data.seasons;
+						if (e.l_country !== data.data.t_country) return false;
 						for (var i=0; i<s.length; i++) {
 							if (s[i].s_id === e.s_id) {
 								console.log("SIGNED UP");

@@ -13,11 +13,13 @@ export default Ember.Component.extend({
 	countryList: null,
 	leagueList: null,
 	seasonList: null,
+	roundList: null,
 	init: function() {
 		this._super();
-		var tasks = 5;
+		var tasks = 6;
 		var self = this;
-		var error = function() {
+		var error = function(data) {
+			console.log(data);
 			tasks = -1;
 			self.set("isLoading", false);
 			self.set("loadingError", true);
@@ -27,26 +29,31 @@ export default Ember.Component.extend({
 				self.set("isLoading", false);
 			}
 		};
+		//Ember.$.ajax("http://localhost:5000/g/countries", {
 		Ember.$.ajax("https://liugues-api.herokuapp.com/g/countries", {
 			method: "GET",
 			success: function(data) {
 				if (data.error) {
-					console.log("Error loading country list");
+					console.log("Error loading country list", data);
 					error();
 				} else {
 					self.set("countryList", data.data);
 					console.log("Loaded country list", data);
 				}
 			},
-			error: error,
+			error: function(data) {
+				console.log("Error loading country list");
+				error(data);
+			},
 			complete: complete
 		});
+		//Ember.$.ajax("http://localhost:5000/g/users", {
 		Ember.$.ajax("https://liugues-api.herokuapp.com/g/users", {
 			method: "GET",
 			data: {token: self.get("token")},
 			success: function(data) {
 				if (data.error) {
-					console.log("Error loading user info");
+					console.log("Error loading user info", data);
 					error();
 				} else {
 					var u = data.data[0];
@@ -59,21 +66,28 @@ export default Ember.Component.extend({
 					console.log("Loaded user info", data);
 				}
 			},
-			error: error,
+			error: function(data) {
+				console.log("Error loading user info");
+				error(data);
+			},
 			complete: complete
 		});
 		Ember.$.ajax("https://liugues-api.herokuapp.com/g/leagues", {
+		//Ember.$.ajax("http://localhost:5000/g/leagues", {
 			method: "GET",
 			success: function(data) {
 				if (data.error) {
-					console.log("Error loading league list");
+					console.log("Error loading league list", data);
 					error();
 				} else {
 					self.set("leagueList", data.data);
 					console.log("Loaded league list", data);
 				}
 			},
-			error: error,
+			error: function(data) {
+				console.log("Error loading league list");
+				error(data);
+			},
 			complete: complete
 		});
 		Ember.$.ajax("https://liugues-api.herokuapp.com/g/seasons", {
@@ -81,28 +95,53 @@ export default Ember.Component.extend({
 			method: "GET",
 			success: function(data) {
 				if (data.error) {
-					console.log("Error loading season list");
+					console.log("Error loading season list", data);
 					error();
 				} else {
 					self.set("seasonList", data.data);
 					console.log("Loaded season list", data);
 				}
 			},
-			error: error,
+			error: function(data) {
+				console.log("Error loading season list");
+				error(data);
+			},
 			complete: complete
 		});
 		Ember.$.ajax("https://liugues-api.herokuapp.com/g/teams", {
+		//Ember.$.ajax("http://localhost:5000/g/teams", {
 			method: "GET",
 			success: function(data) {
 				if (data.error) {
-					console.log("Error loading team list");
+					console.log("Error loading team list", data);
 					error();
 				} else {
 					self.set("teamList", data.data);
 					console.log("Loaded team info", data);
 				}
 			},
-			error: error,
+			error: function(data) {
+				console.log("Error loading team list");
+				error(data);
+			},
+			complete: complete
+		});
+		//Ember.$.ajax("http://localhost:5000/g/rounds", {
+		Ember.$.ajax("https://liugues-api.herokuapp.com/g/rounds", {
+			method: "GET",
+			success: function(data) {
+				if (data.error) {
+					console.log("Error loading round list", data);
+					error();
+				} else {
+					self.set("roundList", data.data);
+					console.log("Loaded round list", data);
+				}
+			},
+			error: function(data) {
+				console.log("Error loading round list");
+				error(data);
+			},
 			complete: complete
 		});
 	},
@@ -129,6 +168,7 @@ export default Ember.Component.extend({
 		logOut() {
 			var self = this;
 			Ember.$.ajax("https://liugues-api.herokuapp.com/p/logout", {
+			//Ember.$.ajax("http://localhost:5000/p/logout", {
 				method: "POST",
 				data: {token: self.get("token")},
 				success: function(data) {

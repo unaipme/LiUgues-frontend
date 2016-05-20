@@ -44,9 +44,9 @@
 			<td colspan="2">
 				<select id="ch_country_select" onChange={{action "loadCountry"}}>
 					<option selected disabled>Choose an option</option>
-					<option id="country-1">Create new country</option>
+					<option value="-1">Create new country</option>
 					{{#each countryList as |c|}}
-						<option id="country{{c.c_id}}" style="background-image:url({{c.c_flag}})">{{c.c_name}}</option>
+						<option value={{c.c_id}} style="background-image:url({{c.c_flag}})">{{c.c_name}}</option>
 					{{/each}}
 				</select>
 			</td>
@@ -67,7 +67,7 @@
 					<select id="ch_lcountry_select" onChange={{action "showLeagues"}}>
 						<option selected disabled>Choose an option</option>
 						{{#each countryList as |c|}}
-							<option id="lcountry{{c.c_id}}" style="background-image:url({{c.c_flag}})">{{c.c_name}}</option>
+							<option value={{c.c_id}} style="background-image:url({{c.c_flag}})">{{c.c_name}}</option>
 						{{/each}}
 					</select>
 				</td>
@@ -77,9 +77,9 @@
 					<td>
 						<select id="ch_league_select" onChange={{action "loadLeague"}}>
 							<option selected disabled>Choose an option</option>
-							<option id="league-1">Create new league in {{selectedLCountry.c_name}}</option>
+							<option value="-1">Create new league in {{selectedLCountry.c_name}}</option>
 							{{#each countryLeagues as |l|}}
-								<option id="league{{l.l_id}}">{{l.l_name}}</option>
+								<option value={{l.l_id}}>{{l.l_name}}</option>
 							{{/each}}
 						</select>
 					</td>
@@ -89,9 +89,9 @@
 			<tr>
 				<td>Name:</td>
 				{{#if newLeague}}
-				<td>{{input id="sel_league_name" value=selectedLeague.l_name}}</td>
+				<td colspan="2">{{input id="sel_league_name" value=selectedLeague.l_name}}</td>
 				{{else}}
-				<td>{{input id="sel_league_name" value=selectedLeague.l_name keyUp=(action "checkLeagueChange")}}</td>
+				<td colspan="2">{{input id="sel_league_name" value=selectedLeague.l_name keyUp=(action "checkLeagueChange")}}</td>
 				{{/if}}
 			</tr>
 			<tr>
@@ -101,11 +101,12 @@
 				{{else}}
 				<td>{{input id="sel_league_logo" value=selectedLeague.l_logo keyUp=(action "checkLeagueChange")}}</td>
 				{{/if}}
+				<td style="line-height:50%"><img src="{{selectedLeague.l_logo}}" class="crest_check" /></td>
 			</tr>
 			{{#unless newLeague}}
 			<tr>
 				<td>Country:</td>
-				<td>
+				<td colspan="2">
 					<select id="sel_league_country" onChange={{action "checkLeagueChange"}}>
 					{{#each countryList as |c|}}
 						{{#if (ifEqual c.c_id selectedLeague.l_country)}}
@@ -119,24 +120,30 @@
 			</tr>
 			{{/unless}}
 			<tr>
-				{{#if newLeague}}
-				<td><button id="save_ch_league" {{action "saveChanges" "league"}}>Save changes</button></td>
-				{{else}}
-				<td><button id="save_ch_league" disabled {{action "saveChanges" "league"}}>Save changes</button></td>
-				{{/if}}
-				<td><button {{action "discardChanges" "league"}}>Discard changes</button></td>
+				<td colspan="3">
+					<table class="admin_panel_table">
+						<tr>
+							{{#if newLeague}}
+							<td><button id="save_ch_league" {{action "saveChanges" "league"}}>Save changes</button></td>
+							{{else}}
+							<td><button id="save_ch_league" disabled {{action "saveChanges" "league"}}>Save changes</button></td>
+							{{/if}}
+							<td><button {{action "discardChanges" "league"}}>Discard changes</button></td>
+						</tr>
+						{{#if selectedLeague.l_id}}
+						<tr>
+							<td>&nbsp;</td>
+							<td><button class="important_func" {{action "deleteElement" "league"}}>Delete league</button></td>
+						</tr>
+						{{/if}}
+						{{#if leagueLoading}}
+						<tr>
+							<td colspan="2" style="text-align:center"><img src="loading.gif" style="width:50px" /></td>
+						</tr>
+						{{/if}}
+					</table>
+				</td>
 			</tr>
-			{{#if selectedLeague.l_id}}
-			<tr>
-				<td>&nbsp;</td>
-				<td><button class="important_func" {{action "deleteElement" "league"}}>Delete league</button></td>
-			</tr>
-			{{/if}}
-			{{#if leagueLoading}}
-			<tr>
-				<td colspan="2" style="text-align:center"><img src="loading.gif" style="width:50px" /></td>
-			</tr>
-			{{/if}}
 		{{/unless}}
 	</table>
 	<div id="league_error_wrap" class="error_dsp_wrap"><span id="league_success" class="success_dsp" /><span id="league_error" class="error_dsp" /></div>
@@ -153,7 +160,7 @@
 					<select id="sel_season_league" onChange={{action "showSeasons"}}>
 						<option selected disabled>Select an option</option>
 						{{#each leagueList as |l|}}
-							<option id="sleague{{l.l_id}}">{{l.l_name}}</option>
+							<option value="{{l.l_id}}">{{l.l_name}}</option>
 						{{/each}}
 					</select>
 				</td>
@@ -163,9 +170,9 @@
 				<td>
 					<select id="ch_season_select" onChange={{action "loadSeason"}}>
 						<option disabled selected>Choose an option</option>
-						<option id="season-1">Create new season for {{selectedSLeague.l_name}}</option>
+						<option value="-1">Create new season for {{selectedSLeague.l_name}}</option>
 						{{#each leagueSeasons as |s|}}
-							<option id="season{{s.s_id}}">{{s.s_desc}} ({{s.s_year}})</option>
+							<option value={{s.s_id}}>{{s.s_desc}} ({{s.s_year}})</option>
 						{{/each}}
 					</select>
 				</td>
@@ -206,6 +213,109 @@
 		{{/unless}}
 	</table>
 	<div id="season_error_wrap" class="error_dsp_wrap"><span id="season_success" class="success_dsp" /><span id="season_error" class="error_dsp" /></div>
+</div>
+<hr />
+<div id="round_mgm_h" class="panel_block_header" {{action "toggleElement" "#round_mgm_h"}}>
+	Round management<img class="expand_arrow" src="arrow.png" style="width:25px;"/>
+</div>
+<div id="round_mgm_c" class="panel_block_content">
+	<table class="admin_panel_table">
+		{{#unless selectedRSeason}}
+		<tr>
+			<td>
+				<div class="info_block">The set of games that are played in one week is considered a round. All teams must play in each of the rounds of one league (unless the number of teams is odd)</div>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<select id="round_league_select" onChange={{action "showRounds"}}>
+					<option selected disabled>Choose a season</option>
+					{{#each seasonList as |s|}}
+						<option value={{s.s_id}}>{{s.s_desc}}</option>
+					{{/each}}
+				</select>
+			</td>
+		</tr>
+		{{else}}
+		<tr>
+			<td>Season:</td>
+			<td>{{selectedRSeason.s_desc}}</td>
+		</tr>
+		<tr>
+			<td colspan="2">
+				<center>
+					<div class="exp_subsection_h" id="fast_creation_wrap" {{action "toggleElement" "#fast_creation_wrap"}}>
+						<img class="expand_arrow2" src="arrow2.png" style="width:25px"/><span>Fast creation</span>
+					</div>
+					<div class="exp_subsection_c">
+						<table class="admin_panel_table">
+							<tr>
+								<td colspan="2"><div class="info_block">Fast creation allows you to create all rounds of a season at once. Introduce the starting date and amount of teams and, assuming a round per week, all rounds will be created.</div></td>
+							</tr>
+							<tr>
+								<td>Starting date:</td>
+								<td><input type="date" id="fc_round_week" min='{{math selectedRSeason.s_year "-" 1}}-08-01' max='{{selectedRSeason.s_year}}-12-31' onBlur="if (this.value < this.min || this.value > this.max) this.value=''; $('#fc_button')[0].disabled = this.value == ''"/></td>
+							</tr>
+							<tr>
+								<td colspan="2">Date must be between {{math selectedRSeason.s_year "-" 1}}-08-01 and {{selectedRSeason.s_year}}-12-31</td>
+							</tr>
+							<tr>
+								<td>Amount of teams:</td>
+								<td><input type="number" id="fc_team_amount" min="0" /></td>
+							</tr>
+							<tr>
+								<td colspan="2" style="text-align:center"><button disabled {{action "fastCreate"}} id="fc_button">Create</button></td>
+							</tr>
+						</table>
+					</div>
+				</center>
+			</td>
+		</tr>
+		{{#unless selectedRSList}}
+		<tr>
+			<td colspan="2" style="text-align:center">No rounds have been created for this season</td>
+		</tr>
+		{{else}}
+		<tr>
+			<td colspan="2">
+				{{#with (arrayElement selectedRSList selectedRSListEl) as |r|}}
+					<center>
+					<div class="exp_subsection_h" id="ch_round_wrap">
+						<img class="left_arrow" src="arrow2.png" style="width:25px" {{action "scrollList" -1}}/><img class="right_arrow" src="arrow2.png" style="width:25px" {{action "scrollList" 1}}/><span>{{r.r_desc}}</span>
+					</div>
+					<div class="exp_subsection_c" style="display:initial">
+						<table class="admin_panel_table">
+							<tr>
+								<td>Number:</td>
+								<td><input type="number" min="0" id="ch_round_num" value="{{r.r_number}}"/></td>
+							</tr>
+							<tr>
+								<td>Date</td>
+								<td><input type="date" id="ch_round_week" onBlur="if (this.value < this.min || this.value > this.max) this.value=''" min='{{math selectedRSeason.s_year "-" 1}}-08-01' max='{{selectedRSeason.s_year}}-12-31' value="{{r.r_week}}" /></td>
+							</tr>
+							{{#unless roundLoading}}
+							<tr>
+								<td><button {{action "saveChanges" "round"}}>Save changes</button></td>
+								<td><button class="important_func" {{action "deleteElement" "round"}}>Delete round</button></td>
+							</tr>
+							{{else}}
+							<tr>
+								<td colspan="2" style="text-align:center"><img src="loading.gif" style="width:50px" /></td>
+							</tr>
+							{{/unless}}
+						</table>
+					</div>
+				</center>
+				{{/with}}
+			</td>
+		</tr>
+		{{/unless}}
+		<tr>
+			<td colspan="2"><button {{action "discardChanges" "round"}}>Change season</button></td>
+		</tr>
+		{{/unless}}
+	</table>
+	<div id="round_error_wrap" class="error_dsp_wrap"><span id="round_success" class="success_dsp" /><span id="round_error" class="error_dsp" /></div>
 </div>
 
 {{yield}}
