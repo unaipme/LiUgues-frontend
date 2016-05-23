@@ -131,6 +131,10 @@ button.important_func {
 	color: white;
 }
 
+option.team {
+	background-size: 40px;
+}
+
 .korolev_bold {
 	font-family:'Korolev Bold';
 }

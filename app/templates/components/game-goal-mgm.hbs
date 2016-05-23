@@ -1,0 +1,117 @@
+<div id="game_mgm_h" class="panel_block_header" {{action "toggleElement" "#game_mgm_h"}}>
+	Game management<img class="expand_arrow" src="arrow.png" style="width:25px;"/>
+</div>
+<div id="game_mgm_c" class="panel_block_content">
+	<table class="admin_panel_table">
+		{{#unless selectedEGame}}
+			{{#unless selectedSeason}}
+				<tr>
+					<td colspan="2">
+						<select id="ch_game_season" onChange={{action "loadSeason"}}>
+							<option selected disabled>Choose a season</option>
+							{{#each seasonList as |s|}}
+								<option value={{s.s_id}}>{{s.s_desc}}</option>
+							{{/each}}
+						</select>
+					</td>
+				</tr>
+			{{else}}
+				<tr>
+					<td>Season:</td>
+					<td>{{selectedSeason.s_desc}}</td>
+				</tr>
+				{{#unless selectedSRounds}}
+				<tr>
+					<td colspan="2">There are no rounds created for this season</td>
+				</tr>
+				{{else}}
+				<tr>
+					<td colspan="2">
+						{{#with (arrayElement selectedSRounds selectedSRoundEl) as |r|}}
+							<center>
+								<div class="exp_subsection_h" id="ch_ground_wrap">
+									<img class="left_arrow" src="arrow2.png" style="width:25px" {{action "scrollList" -1}}/><img class="right_arrow" src="arrow2.png" style="width:25px" {{action "scrollList" 1}}/><span>{{r.r_desc}}</span>
+								</div>
+								<div class="exp_subsection_c" style="display:initial">
+									<table class="admin_panel_table">
+										<tr>
+											<td colspan="2" style="text-align:center"><button {{action "loadGame" -1}}>Create game</button></td>
+										</tr>
+										{{#unless selectedSRGames}}
+											<tr>
+												<td colspan="2">There are no games created for this round</td>
+											</tr>
+										{{else}}
+											{{#each selectedSRGames as |g|}}
+												<tr>
+													<td>{{g.g_hometeam}} - {{g.g_awayteam}}</td>
+													<td><button {{action "loadGame" g.g_id}}>Modify</button></td>
+												</tr>
+											{{/each}}
+										{{/unless}}
+									</table>
+								</div>
+							</center>
+						{{/with}}
+					</td>
+				</tr>
+				{{/unless}}
+				<tr>
+					<td colspan="2"><button {{action "discardChanges" "game"}}>Discard changes</button></td>
+				</tr>
+			{{/unless}}
+		{{else}}
+			<tr>
+				<td>Home team</td>
+				<td>
+					<select id="ch_home_game">
+						<option disabled selected value=-1>Choose one team</option>
+						{{#each selectedSTeams as |t|}}
+							{{#if (ifEqual t.t_id selectedEGame.g_awayteam_id)}}
+								<option class="team" value={{t.t_id}} selected style="background-image:url({{t.t_crest}})">{{t.t_name}}</option>
+							{{else}}
+								<option class="team" value={{t.t_id}} style="background-image:url({{t.t_crest}})">{{t.t_name}}</option>
+							{{/if}}
+						{{/each}}
+					</select>
+				</td>
+			</tr>
+			<tr>
+				<td>Away team</td>
+				<td>
+					<select id="ch_away_game">
+						<option disabled selected value=-1>Choose one team</option>
+						{{#each selectedSTeams as |t|}}
+							{{#if (ifEqual t.t_id selectedEGame.g_hometeam_id)}}
+								<option class="team" value={{t.t_id}} selected style="background-image:url({{t.t_crest}})">{{t.t_name}}</option>
+							{{else}}
+								<option class="team" value={{t.t_id}} style="background-image:url({{t.t_crest}})">{{t.t_name}}</option>
+							{{/if}}
+						{{/each}}
+					</select>
+				</td>
+			</tr>
+			<tr>
+				<td>Date and time:</td>
+				<td><input type="datetime-local" id="ch_when_game" value={{selectedEGame.g_when}} /></td>
+			</tr>
+			{{#if newGame}}
+			<tr>
+				<td><button {{action "saveChanges" "game"}}>Save changes</button></td>
+				<td><button {{action "discardChanges" "gameEdit"}}>Discard changes</button></td>
+			</tr>
+			{{else}}
+			<tr>
+				<td><button {{action "saveChanges" "game"}}>Save changes</button></td>
+				<td><button class="important_func" {{action "deleteElement" "game"}}>Delete game</button></td>
+			</tr>
+			<tr>
+				<td colspan="2"><button {{action "discardChanges" "gameEdit"}}>Discard changes</button></td>
+			</tr>
+			{{/if}}
+		{{/unless}}
+	</table>
+	<div id="game_error_wrap" class="error_dsp_wrap"><span id="game_success" class="success_dsp" /><span id="game_error" class="error_dsp" /></div>
+</div>
+
+{{yield}}

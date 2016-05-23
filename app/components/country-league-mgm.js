@@ -86,7 +86,7 @@ export default Ember.Component.extend({
 			var t = event.target;
 			var id = parseInt(t.options[t.selectedIndex].value);
 			var s = this.get("seasonList").filter(function(e) {
-				return (e.s_id === id)
+				return (e.s_id === id);
 			})[0];
 			var rounds = this.get("roundList").filter(function(e) {
 				return (e.r_season === id);
@@ -641,8 +641,11 @@ export default Ember.Component.extend({
 			var v = this.get("selectedRSListEl");
 			var nv = v + n;
 			var l = this.get("selectedRSList").length;
-			if (nv == l) nv = 0;
-			else if (nv < 0) nv = l - 1;
+			if (nv === l) {
+				nv = 0;
+			} else if (nv < 0) {
+				nv = l - 1;
+			}
 			this.set("selectedRSListEl", nv);
 		}
 	}

@@ -14,10 +14,11 @@ export default Ember.Component.extend({
 	leagueList: null,
 	seasonList: null,
 	roundList: null,
+	gameList: null,
 	init: function() {
 		this._super();
-		var tasks = 6;
 		var self = this;
+		var tasks = 2;
 		var error = function(data) {
 			console.log(data);
 			tasks = -1;
@@ -29,21 +30,26 @@ export default Ember.Component.extend({
 				self.set("isLoading", false);
 			}
 		};
-		//Ember.$.ajax("http://localhost:5000/g/countries", {
-		Ember.$.ajax("https://liugues-api.herokuapp.com/g/countries", {
+		//Ember.$.ajax("http://localhost:5000/g/init", {
+		Ember.$.ajax("https://liugues-api.herokuapp.com/g/init", {
 			method: "GET",
 			success: function(data) {
 				if (data.error) {
-					console.log("Error loading country list", data);
+					console.log("Error occurred initializing");
 					error();
-				} else {
-					self.set("countryList", data.data);
-					console.log("Loaded country list", data);
+					return;
 				}
+				console.log("Loaded initializing info", data);
+				self.set("countryList", data.data.countries);
+				self.set("leagueList", data.data.leagues);
+				self.set("roundList", data.data.rounds);
+				self.set("teamList", data.data.teams);
+				self.set("gameList", data.data.games);
+				self.set("seasonList", data.data.seasons);
 			},
 			error: function(data) {
-				console.log("Error loading country list");
-				error(data);
+				console.log("Error occurred initializing");
+				error();
 			},
 			complete: complete
 		});
@@ -68,78 +74,6 @@ export default Ember.Component.extend({
 			},
 			error: function(data) {
 				console.log("Error loading user info");
-				error(data);
-			},
-			complete: complete
-		});
-		Ember.$.ajax("https://liugues-api.herokuapp.com/g/leagues", {
-		//Ember.$.ajax("http://localhost:5000/g/leagues", {
-			method: "GET",
-			success: function(data) {
-				if (data.error) {
-					console.log("Error loading league list", data);
-					error();
-				} else {
-					self.set("leagueList", data.data);
-					console.log("Loaded league list", data);
-				}
-			},
-			error: function(data) {
-				console.log("Error loading league list");
-				error(data);
-			},
-			complete: complete
-		});
-		Ember.$.ajax("https://liugues-api.herokuapp.com/g/seasons", {
-		//Ember.$.ajax("http://localhost:5000/g/seasons", {
-			method: "GET",
-			success: function(data) {
-				if (data.error) {
-					console.log("Error loading season list", data);
-					error();
-				} else {
-					self.set("seasonList", data.data);
-					console.log("Loaded season list", data);
-				}
-			},
-			error: function(data) {
-				console.log("Error loading season list");
-				error(data);
-			},
-			complete: complete
-		});
-		Ember.$.ajax("https://liugues-api.herokuapp.com/g/teams", {
-		//Ember.$.ajax("http://localhost:5000/g/teams", {
-			method: "GET",
-			success: function(data) {
-				if (data.error) {
-					console.log("Error loading team list", data);
-					error();
-				} else {
-					self.set("teamList", data.data);
-					console.log("Loaded team info", data);
-				}
-			},
-			error: function(data) {
-				console.log("Error loading team list");
-				error(data);
-			},
-			complete: complete
-		});
-		//Ember.$.ajax("http://localhost:5000/g/rounds", {
-		Ember.$.ajax("https://liugues-api.herokuapp.com/g/rounds", {
-			method: "GET",
-			success: function(data) {
-				if (data.error) {
-					console.log("Error loading round list", data);
-					error();
-				} else {
-					self.set("roundList", data.data);
-					console.log("Loaded round list", data);
-				}
-			},
-			error: function(data) {
-				console.log("Error loading round list");
 				error(data);
 			},
 			complete: complete
