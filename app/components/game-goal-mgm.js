@@ -75,10 +75,17 @@ export default Ember.Component.extend({
 						if (data.error) {
 							self.send("showMessage", errorID, data.data);
 						} else {
-							self.send("showMessage", "game_success", data.data);
-							setTimeout(function() {
-								window.location.reload();
-							}, 1500);
+							self.send("showMessage", "game_success", "Successfully updated");
+							if (data.data) {
+								self.set("gameList", data.data);
+								self.set("newGame", false);
+								self.set("selectedEGame", null);
+								self.send("scrollList", 0);
+							} else {
+								setTimeout(function() {
+									window.location.reload();
+								}, 1500);
+							}
 						}
 					};
 					errorFunc = function() {
@@ -93,7 +100,6 @@ export default Ember.Component.extend({
 			}
 			self.set("connectionBusy", true);
 			(beforeFunc || function(){})();
-			console.log(data);
 			Ember.$.ajax(ajaxURL, {
 				method: "POST",
 				data: data,
@@ -122,7 +128,6 @@ export default Ember.Component.extend({
 			switch (f) {
 				case "game":
 					var game = self.get("selectedEGame");
-					console.log(game);
 					name = game.g_hometeam + " - " + game.g_awayteam;
 					//ajaxURL = "http://localhost:5000/p/del_game";
 					ajaxURL = "https://liugues-api.herokuapp.com/p/del_game";
@@ -223,6 +228,7 @@ export default Ember.Component.extend({
 			} else if (nv < 0) {
 				nv = l - 1;
 			}
+			console.log("HEJEH", this.get("gameList"));
 			var g = this.get("gameList").filter(function(e) {
 				return (e.g_round === self.get("selectedSRounds")[nv].r_id);
 			});

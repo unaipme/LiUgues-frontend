@@ -82,9 +82,12 @@ export default Ember.Component.extend({
 				this.set("leagueSeasons", ss);
 			}
 		},
-		showRounds(event) {
-			var t = event.target;
-			var id = parseInt(t.options[t.selectedIndex].value);
+		showRounds(aID) {
+			var id;
+			if (aID === -1) {
+				var t = Ember.$("#round_league_select")[0];
+				id = parseInt(t.options[t.selectedIndex].value);
+			} else id = aID;
 			var s = this.get("seasonList").filter(function(e) {
 				return (e.s_id === id);
 			})[0];
@@ -434,14 +437,20 @@ export default Ember.Component.extend({
 					};
 					//ajaxURL = "http://localhost:5000/p/ch_round";
 					ajaxURL = "https://liugues-api.herokuapp.com/p/ch_round";
-					successFunc = function(data) {
-						if (data.error) {
-							self.send("showMessage", errorID, data.msg);
+					successFunc = function(resp) {
+						if (resp.error) {
+							self.send("showMessage", errorID, resp.data);
 						} else {
 							self.send("showMessage", "round_success", "Round info updated");
-							setTimeout(function() {
-								window.location.reload();
-							}, 1500);
+							console.log(resp.data);
+							if (resp.data) {
+								self.set("roundList", resp.data);
+								self.send("showRounds", self.get("selectedRSeason").s_id);
+							} else {
+								setTimeout(function() {
+									window.location.reload();
+								}, 1500);
+							}
 						}
 						self.set("roundLoading", false);
 					};

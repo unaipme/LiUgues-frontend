@@ -44,7 +44,7 @@
 										{{else}}
 											{{#each selectedSRGames as |g|}}
 												<tr>
-													<td>{{g.g_hometeam}} - {{g.g_awayteam}}</td>
+													<td><span style="float:left"><img src="{{g.g_hometeam_crest}}" style="width:18px" />{{g.g_hometeam}}</span><span style="float:right">{{g.g_awayteam}}<img src="{{g.g_awayteam_crest}}" style="width:18px" /></span></td>
 													<td><button {{action "loadGame" g.g_id}}>Modify</button></td>
 												</tr>
 											{{/each}}

@@ -228,7 +228,7 @@
 		</tr>
 		<tr>
 			<td>
-				<select id="round_league_select" onChange={{action "showRounds"}}>
+				<select id="round_league_select" onChange={{action "showRounds" -1}}>
 					<option selected disabled>Choose a season</option>
 					{{#each seasonList as |s|}}
 						<option value={{s.s_id}}>{{s.s_desc}}</option>
