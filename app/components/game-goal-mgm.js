@@ -228,7 +228,6 @@ export default Ember.Component.extend({
 			} else if (nv < 0) {
 				nv = l - 1;
 			}
-			console.log("HEJEH", this.get("gameList"));
 			var g = this.get("gameList").filter(function(e) {
 				return (e.g_round === self.get("selectedSRounds")[nv].r_id);
 			});

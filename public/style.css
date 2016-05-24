@@ -321,6 +321,86 @@ option.team {
 	top: -15px;
 }
 
+.round_view_header {
+	box-sizing: padding-box;
+	color: white;
+	font-family: 'Korolev Light';
+	width:85%;
+	font-size: 15px;
+	line-height:100%;
+	padding: 5px;
+	height: 40px;
+	text-align:left;
+	border-top-left-radius: 5px;
+	border-top-right-radius: 5px;
+	white-space: nowrap;
+	overflow: hidden;
+	background: -webkit-linear-gradient(left, #00ACC1, rgba(255,255,255,0));
+    background: -o-linear-gradient(right, #00ACC1, rgba(255,255,255,0));
+    background: -moz-linear-gradient(right, #00ACC1, rgba(255,255,255,0));
+    background: linear-gradient(to right, #00ACC1, rgba(255,255,255,0));
+}
+
+.season_logo_view {
+	height: 40px;
+	float:right;
+	line-height: 100%;
+	position: relative;
+	top: -40px;
+	left: -10%;
+	width: 85%;
+	background-repeat: no-repeat;
+	background-position: right;
+	background-size: 200px;
+	z-index: -1;
+}
+
+.round_game_list {
+	box-sizing: padding-box;
+	width: 85%;
+	padding: 5px;
+	position: relative;
+	top: -40px;
+	font-family: 'Slabo 27px';
+	font-size: 16px;
+	border-collapse: collapse;
+}
+
+@keyframes playing_match {
+	0% {background-color: white}
+	50% {background-color: #C5E1A5}
+}
+
+.round_game_list tr.playing_game {
+	animation-name: playing_match;
+	animation-duration: 2s;
+	animation-iteration-count: infinite;
+}
+
+.round_game_list td:nth-child(4){
+	text-align:center;
+}
+
+.round_game_list td:first-child, .round_game_list td:last-child {
+	width: 50px;
+}
+
+.round_game_list td:nth-child(2), .round_game_list td:nth-child(6) {
+	width:40%;
+}
+
+.round_game_list td:nth-child(3), .round_game_list td:nth-child(5) {
+	font-size: 22px;
+}
+
+.round_game_list td:nth-child(5), .round_game_list td:nth-child(6) {
+	text-align: right;
+}
+
+.game_crest_view {
+	width:40px;
+}
+
 button {
 	outline:none;
 	padding: 7px;

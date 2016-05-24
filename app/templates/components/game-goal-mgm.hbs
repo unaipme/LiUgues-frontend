@@ -67,7 +67,7 @@
 					<select id="ch_home_game">
 						<option disabled selected value=-1>Choose one team</option>
 						{{#each selectedSTeams as |t|}}
-							{{#if (ifEqual t.t_id selectedEGame.g_awayteam_id)}}
+							{{#if (ifEqual t.t_id selectedEGame.g_hometeam_id)}}
 								<option class="team" value={{t.t_id}} selected style="background-image:url({{t.t_crest}})">{{t.t_name}}</option>
 							{{else}}
 								<option class="team" value={{t.t_id}} style="background-image:url({{t.t_crest}})">{{t.t_name}}</option>
@@ -82,7 +82,7 @@
 					<select id="ch_away_game">
 						<option disabled selected value=-1>Choose one team</option>
 						{{#each selectedSTeams as |t|}}
-							{{#if (ifEqual t.t_id selectedEGame.g_hometeam_id)}}
+							{{#if (ifEqual t.t_id selectedEGame.g_awayteam_id)}}
 								<option class="team" value={{t.t_id}} selected style="background-image:url({{t.t_crest}})">{{t.t_name}}</option>
 							{{else}}
 								<option class="team" value={{t.t_id}} style="background-image:url({{t.t_crest}})">{{t.t_name}}</option>

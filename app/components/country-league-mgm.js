@@ -87,7 +87,9 @@ export default Ember.Component.extend({
 			if (aID === -1) {
 				var t = Ember.$("#round_league_select")[0];
 				id = parseInt(t.options[t.selectedIndex].value);
-			} else id = aID;
+			} else {
+				id = aID;
+			}
 			var s = this.get("seasonList").filter(function(e) {
 				return (e.s_id === id);
 			})[0];

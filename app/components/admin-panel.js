@@ -47,7 +47,7 @@ export default Ember.Component.extend({
 				self.set("gameList", data.data.games);
 				self.set("seasonList", data.data.seasons);
 			},
-			error: function(data) {
+			error: function() {
 				console.log("Error occurred initializing");
 				error();
 			},

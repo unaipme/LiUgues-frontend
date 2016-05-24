@@ -1,0 +1,32 @@
+<center>
+	{{#if isLoading}}
+		<img src="loading.gif" />
+	{{else if isError}}
+		<p>An error happened when trying to load the results</p>
+		<button onClick="window.location.reload()">Try again</button>
+	{{else}}
+		{{#each gameList as |r|}}
+			{{#if r.l_logo}}
+				<div class="round_view_header">{{r.r_desc}}</div>
+				<span class="season_logo_view" style="background-image:url({{r.l_logo}})" />
+			{{else}}
+				<div class="round_view_header">{{r.r_desc}}</div>
+			{{/if}}
+			<table class="round_game_list">
+				{{#each r.games as |g|}}
+					<tr class="{{unless (ifEqual g.g_state 2) "playing_game"}}">
+						<td><img src="{{g.g_hometeam_crest}}" class="game_crest_view" /></td>
+						<td>{{g.g_hometeam}}</td>
+						<td>{{g.g_hometeam_goals}}</td>
+						<td>-</td>
+						<td>{{g.g_awayteam_goals}}</td>
+						<td>{{g.g_awayteam}}</td>
+						<td><img src="{{g.g_awayteam_crest}}" class="game_crest_view" /></td>
+					</tr>
+				{{/each}}
+			</table>
+		{{/each}}
+	{{/if}}
+</center>
+
+{{yield}}
