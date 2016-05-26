@@ -1,0 +1,166 @@
+<div id="player_mgm_h" class="panel_block_header" {{action "toggleElement" "#player_mgm_h"}}>
+	Player management<img class="expand_arrow" src="arrow.png" style="width:25px;"/>
+</div>
+<div id="player_mgm_c" class="panel_block_content">
+	{{#unless selectedPlayer}}
+		<button {{action "loadPlayer" -1}}>Create new player</button>
+		{{#if playerList}}
+			{{#each alphabet as |l|}}
+				{{#if (filterBy playerList l "p_sname")}}
+					<div id="players_starting_{{l}}" class="panel_block_header letter_header" {{action "toggleElement" (concat "#players_starting_" l)}}>
+						{{l}}<img class="expand_arrow" src="arrow.png" style="width:25px;"/>
+					</div>
+					<div class="panel_block_content letter_content">
+						{{#each (filterBy playerList l "p_sname") as |p|}}
+							<div class="exp_subsection_h team_list_header" id="player_element_{{p.p_id}}" {{action "toggleElement" (concat "#player_element_" p.p_id)}}>
+								<img class="expand_arrow2" src="arrow2.png" style="width:25px"/><span>{{p.p_sname}}, {{p.p_name}}</span>
+							</div>
+							<div class="exp_subsection_c team_list_content">
+								<table class="team_list_table">
+									<tr>
+										<td><button {{action "loadPlayer" p.p_id}}>Update information</button></td>
+										<td><button class="important_func" {{action "deleteElement" "player" p.p_id}}>Delete player</button></td>
+									</tr>
+								</table>
+							</div>
+						{{/each}}
+					</div>
+				{{/if}}
+			{{/each}}
+		{{else}}
+			<p>No players have been created</p>
+		{{/if}}
+	{{else}}
+		<table class="admin_panel_table">
+			<tr>
+				<td>Name</td>
+				<td>{{input value=selectedPlayer.p_name}}</td>
+			</tr>
+			<tr>
+				<td>Surname</td>
+				<td>{{input value=selectedPlayer.p_sname}}</td>
+			</tr>
+			<tr>
+				<td>Country</td>
+				<td>
+					<select id="ch_player_country">
+						<option disabled selected value=-1>Choose a country</option>
+						{{#each countryList as |c|}}
+							{{#if (ifEqual selectedPlayer.p_country c.c_id)}}
+								<option value={{c.c_id}} selected style="background-image:url({{c.c_flag}})">{{c.c_name}}</option>
+							{{else}}
+								<option value={{c.c_id}} style="background-image:url({{c.c_flag}})">{{c.c_name}}</option>
+							{{/if}}
+						{{/each}}
+					</select>
+				</td>
+			</tr>
+			<tr>
+				<td>Position:</td>
+				<td>
+					<select id="ch_player_position">
+						<option selected disabled>Choose a position</option>
+						{{#each positionList as |ps|}}
+							{{#if (ifEqual ps.id selectedPlayer.p_position)}}
+							<option selected value={{ps.id}}>{{ps.desc}}</option>
+							{{else}}
+							<option value={{ps.id}}>{{ps.desc}}</option>
+							{{/if}}
+						{{/each}}
+					</select>
+				</td>
+			</tr>
+			<tr>
+				<td><button {{action "saveChanges" "player"}}>Save changes</button></td>
+				<td><button {{action "discardChanges" "player"}}>Discard changes</button></td>
+			</tr>
+		</table>
+	{{/unless}}
+	<br />
+	<div id="player_error_wrap" class="error_dsp_wrap"><span id="player_success" class="success_dsp" /><span id="player_error" class="error_dsp" /></div>
+</div>
+<hr />
+<div id="player_sign_mgm_h" class="panel_block_header" {{action "toggleElement" "#player_sign_mgm_h"}}>
+	Sign up players<img class="expand_arrow" src="arrow.png" style="width:25px;"/>
+</div>
+<div id="player_sign_mgm_c" class="panel_block_content">
+	{{#unless selectedSPlayer}}
+		{{#if playerList}}
+			{{#each alphabet as |l|}}
+				{{#if (filterBy playerList l "p_sname")}}
+					<div id="s_players_starting_{{l}}" class="panel_block_header letter_header" {{action "toggleElement" (concat "#s_players_starting_" l)}}>
+						{{l}}<img class="expand_arrow" src="arrow.png" style="width:25px;"/>
+					</div>
+					<div class="panel_block_content letter_content">
+						{{#each (filterBy playerList l "p_sname") as |p|}}
+							<div class="exp_subsection_h team_list_header t_in_s_element" id="player_s_element_{{p.p_id}}">
+								<span>{{p.p_sname}}, {{p.p_name}}</span><img src="loading.gif" id="loading_player_{{p.p_id}}" style="display:none;float:right" /><button id="choose_player_{{p.p_id}}" style="float:right" {{action "showPlayer" p.p_id}}>Choose</button>
+							</div>
+						{{/each}}
+					</div>
+				{{/if}}
+			{{/each}}
+		{{else}}
+			<p>No players have been created</p>
+		{{/if}}
+	{{else}}
+		<table class="admin_panel_table">
+			<tr>
+				<td>Player:</td>
+				<td><span style="font-size:17px;font-weight: bold">{{selectedSPlayer.p_sname}}</span>, {{selectedSPlayer.p_name}}</td>
+			</tr>
+			{{#if selectedCareer}}
+				<tr>
+					<td colspan="2" style="text-align: center">Signed up in the following teams per season:</td>
+				</tr>
+				<tr>
+					<td colspan="2">
+						<table class="admin_panel_table">
+							{{#each selectedCareer as |c|}}
+								<tr>
+									<td style="text-align:left">{{c.season.s_desc}}</td>
+									<td>{{c.team.t_name}}</td>
+									<td><button class="important_func" {{action "deleteElement" "signup" c.id}}>Delete</button></td>
+								</tr>
+							{{/each}}
+						</table>
+					</td>
+				</tr>
+			{{else}}
+				<tr>
+					<td colspan="2" style="text-align: center">Player is not signed up for any team</td>
+				</tr>
+			{{/if}}
+			<tr><td colspan="2">&nbsp;</td></tr>
+			<tr>
+				<td>
+					<select id="sign_new_season" onChange={{action "loadTeamList"}}>
+						<option selected disabled>Choose season for signup</option>
+						{{#each seasonList as |s|}}
+							<option value={{s.s_id}}>{{s.s_desc}}</option>
+						{{/each}}
+					</select>
+				</td>
+				<td>
+					<select id="sign_new_team" onChange="$('#sign_up_button')[0].disabled = false">
+						{{#unless selectedSTeams}}
+							<option selected disabled>Choose a season first</option>
+						{{else}}
+							<option selected disabled>Choose a team</option>
+							{{#each selectedSTeams as |t|}}
+								<option value={{t.t_id}}>{{t.t_name}}</option>
+							{{/each}}
+						{{/unless}}
+					</select>
+				</td>
+			</tr>
+			<tr>
+				<td><button id="sign_up_button" disabled {{action "saveChanges" "signup"}}>Sign up</button></td>
+				<td><button {{action "discardChanges" "signup"}}>Change player</button></td>
+			</tr>
+		</table>
+	{{/unless}}
+	<div id="player_s_error_wrap" class="error_dsp_wrap"><span id="player_s_success" class="success_dsp" /><span id="player_s_error" class="error_dsp" /></div>
+</div>
+
+{{yield}}

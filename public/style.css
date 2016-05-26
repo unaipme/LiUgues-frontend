@@ -85,9 +85,8 @@ table#user_info_table td {
 
 select {
 	font-family: 'Slabo 27px', arial;
-	font-size: 16px;
+	font-size: 15px;
 	width: 100%;
-	padding: 5px;
 }
 
 select option {
@@ -259,7 +258,7 @@ option.team {
 	display: inline-block;
 	position:relative;
 	font-family: 'Korolev Light';
-	font-size: 8px;
+	font-size: 10px;
 	color: #00ACC1;
 	border: 1px solid #E0E0E0;
 	border-bottom: 0;
@@ -269,7 +268,7 @@ option.team {
 	margin:0;
 	cursor: pointer;
 	transition: font-size 0.5s, bottom 0.5s;
-	bottom: -3px;
+	bottom: -2px;
 }
 
 .tab_element:hover {

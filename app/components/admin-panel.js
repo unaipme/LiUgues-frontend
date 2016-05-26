@@ -15,6 +15,7 @@ export default Ember.Component.extend({
 	seasonList: null,
 	roundList: null,
 	gameList: null,
+	playerList: null,
 	init: function() {
 		this._super();
 		var self = this;
@@ -46,6 +47,7 @@ export default Ember.Component.extend({
 				self.set("teamList", data.data.teams);
 				self.set("gameList", data.data.games);
 				self.set("seasonList", data.data.seasons);
+				self.set("playerList", data.data.players);
 			},
 			error: function() {
 				console.log("Error occurred initializing");

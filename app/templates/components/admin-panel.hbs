@@ -23,10 +23,11 @@
 			</table>
 		</div>
 		<div id="tab_container">
-			<div class="tab_element {{if (ifEqual chosenTab 0) "selected_tab"}}" {{action "setTab" 0}}>Profile management</div>
-			<div class="tab_element {{if (ifEqual chosenTab 1) "selected_tab"}}" {{action "setTab" 1}}>Country and league management</div>
-			<div class="tab_element {{if (ifEqual chosenTab 2) "selected_tab"}}" {{action "setTab" 2}}>Team management</div>
-			<div class="tab_element {{if (ifEqual chosenTab 3) "selected_tab"}}" {{action "setTab" 3}}>Game management</div>
+			<div class="tab_element {{if (ifEqual chosenTab 0) "selected_tab"}}" {{action "setTab" 0}}>Profile</div>
+			<div class="tab_element {{if (ifEqual chosenTab 1) "selected_tab"}}" {{action "setTab" 1}}>Countries and leagues</div>
+			<div class="tab_element {{if (ifEqual chosenTab 2) "selected_tab"}}" {{action "setTab" 2}}>Teams</div>
+			<div class="tab_element {{if (ifEqual chosenTab 3) "selected_tab"}}" {{action "setTab" 3}}>Games</div>
+			<div class="tab_element {{if (ifEqual chosenTab 4) "selected_tab"}}" {{action "setTab" 4}}>Players</div>
 		</div>
 		<div id="content_container">
 			{{#if (ifEqual 0 chosenTab)}}
@@ -37,6 +38,8 @@
 				{{team-season-mgm toggleElement=(action "toggleElement") showMessage=(action "showMessage") teamList=teamList countryList=countryList seasonList=seasonList}}
 			{{else if (ifEqual 3 chosenTab)}}
 				{{game-goal-mgm toggleElement=(action "toggleElement") showMessage=(action "showMessage") gameList=gameList roundList=roundList seasonList=seasonList teamList=teamList}}
+			{{else if (ifEqual 4 chosenTab)}}
+				{{player-mgm toggleElement=(action "toggleElement") showMessage=(action "showMessage") playerList=playerList teamList=teamList seasonList=seasonList countryList=countryList}}
 			{{/if}}
 		</div>
 		<hr />
