@@ -94,7 +94,11 @@
 					<div class="panel_block_content letter_content">
 						{{#each (filterBy playerList l "p_sname") as |p|}}
 							<div class="exp_subsection_h team_list_header t_in_s_element" id="player_s_element_{{p.p_id}}">
+								{{#if p.p_last_crest}}
+								<img src="{{p.p_last_crest}}" /><span>{{p.p_sname}}, {{p.p_name}}</span><img src="loading.gif" id="loading_player_{{p.p_id}}" style="display:none;float:right" /><button id="choose_player_{{p.p_id}}" style="float:right" {{action "showPlayer" p.p_id}}>Choose</button>
+								{{else}}
 								<span>{{p.p_sname}}, {{p.p_name}}</span><img src="loading.gif" id="loading_player_{{p.p_id}}" style="display:none;float:right" /><button id="choose_player_{{p.p_id}}" style="float:right" {{action "showPlayer" p.p_id}}>Choose</button>
+								{{/if}}
 							</div>
 						{{/each}}
 					</div>

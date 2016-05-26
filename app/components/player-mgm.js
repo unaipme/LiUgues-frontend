@@ -306,7 +306,6 @@ export default Ember.Component.extend({
 							var l = [];
 							for (var i=0; i<c.length; i++) {
 								var t = self.get("teamList").filter(function(e) {
-									console.log(e.t_id, c[i].t_id);
 									return (e.t_id === c[i].t_id);
 								})[0];
 								var s = self.get("seasonList").filter(function(e) {
