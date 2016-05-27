@@ -11,6 +11,7 @@ export default Ember.Component.extend({
 	selectedSPlayer: null,
 	selectedCareer: null,
 	selectedSTeams: null,
+	loadingPlayer: false,
 	newPlayer: false,
 	actions: {
 		toggleElement(id) {
@@ -72,8 +73,10 @@ export default Ember.Component.extend({
 							Ember.$("#sign_new_season")[0].options[0].selected = true;
 							self.set("selectedSTeams", null);
 							if (data.data) {
-								console.log(data.data);
-								var c = data.data;
+								if (data.data.players) {
+									self.set("playerList", data.data.players);
+								}
+								var c = data.data.career;
 								var l = [];
 								for (var i=0; i<c.length; i++) {
 									var t = self.get("teamList").filter(function(e) {
@@ -125,6 +128,7 @@ export default Ember.Component.extend({
 						if (self.get("selectedPlayer").p_id) {
 							data.p_id = self.get("selectedPlayer").p_id;
 						}
+						self.set("loadingPlayer", true);
 					};
 					successFunc = function(data) {
 						if (data.error) {
@@ -141,11 +145,13 @@ export default Ember.Component.extend({
 						}
 						self.set("selectedPlayer", null);
 						self.set("newPlayer", false);
+						self.set("loadingPlayer", false);
 					};
 					errorFunc = function() {
 						self.send("showMessage", errorID, "An error occurred when approaching the database");
 						self.set("selectedPlayer", null);
 						self.set("newPlayer", false);
+						self.set("loadingPlayer", false);
 					};
 				break;
 			}
@@ -267,10 +273,13 @@ export default Ember.Component.extend({
 								self.set("selectedCareer", null);
 							}
 						}
+						self.set("loadingPlayer", false);
 					};
 					errorFunc = function() {
 						self.send("showMessage", "player_error", "An error occurred when approaching the database");
+						self.set("loadingPlayer", false);
 					};
+					self.set("loadingPlayer", true);
 				break;
 			}
 			if (!confirm("Are you sure you want to delete "+name+"?")) {

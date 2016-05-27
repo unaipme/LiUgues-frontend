@@ -18,8 +18,12 @@
 							<div class="exp_subsection_c team_list_content">
 								<table class="team_list_table">
 									<tr>
-										<td><button {{action "loadPlayer" p.p_id}}>Update information</button></td>
-										<td><button class="important_func" {{action "deleteElement" "player" p.p_id}}>Delete player</button></td>
+										{{#unless loadingPlayer}}
+											<td><button {{action "loadPlayer" p.p_id}}>Update information</button></td>
+											<td><button class="important_func" {{action "deleteElement" "player" p.p_id}}>Delete player</button></td>
+										{{else}}
+											<td colspan="2" style="text-align:center"><img src="loading.gif" style="width:50px" /></td>
+										{{/unless}}
 									</tr>
 								</table>
 							</div>
@@ -71,8 +75,12 @@
 				</td>
 			</tr>
 			<tr>
-				<td><button {{action "saveChanges" "player"}}>Save changes</button></td>
-				<td><button {{action "discardChanges" "player"}}>Discard changes</button></td>
+				{{#unless loadingPlayer}}
+					<td><button {{action "saveChanges" "player"}}>Save changes</button></td>
+					<td><button {{action "discardChanges" "player"}}>Discard changes</button></td>
+				{{else}}
+					<td colspan="2" style="text-align:center"><img src="loading.gif" style="width:50px" /></td>
+				{{/unless}}
 			</tr>
 		</table>
 	{{/unless}}
