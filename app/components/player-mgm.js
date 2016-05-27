@@ -54,8 +54,8 @@ export default Ember.Component.extend({
 						s_id: Ember.$("#sign_new_season")[0].value,
 						t_id: Ember.$("#sign_new_team")[0].value
 					};
-					//ajaxURL = "http://localhost:5000/p/ch_career";
-					ajaxURL = "https://liugues-api.herokuapp.com/p/ch_career";
+					ajaxURL = "http://localhost:5000/p/ch_career";
+					//ajaxURL = "https://liugues-api.herokuapp.com/p/ch_career";
 					errorID = "player_s_error";
 					checkFunc = function() {
 						if (!data.p_id || !data.s_id || !data.t_id || data.p_id < 0 || data.s_id < 0 || data.t_id < 0) {
@@ -72,6 +72,7 @@ export default Ember.Component.extend({
 							Ember.$("#sign_new_season")[0].options[0].selected = true;
 							self.set("selectedSTeams", null);
 							if (data.data) {
+								console.log(data.data);
 								var c = data.data;
 								var l = [];
 								for (var i=0; i<c.length; i++) {
@@ -99,8 +100,8 @@ export default Ember.Component.extend({
 					data = {
 						p_name: self.get("selectedPlayer").p_name,
 						p_sname: self.get("selectedPlayer").p_sname,
-						p_country: Ember.$("#ch_player_country")[0].value,
-						p_position: Ember.$("#ch_player_position")[0].value
+						p_country: parseInt(Ember.$("#ch_player_country")[0].value),
+						p_position: parseInt(Ember.$("#ch_player_position")[0].value)
 					};
 					ajaxURL = "http://liugues-api.herokuapp.com/p/ch_player";
 					//ajaxURL = "http://localhost:5000/p/ch_player";
@@ -188,8 +189,8 @@ export default Ember.Component.extend({
 					})[0];
 					console.log(el);
 					name = p.p_name + " " + p.p_sname + " from " + el.team.t_name;
-					//ajaxURL = "http://localhost:5000/p/del_career";
-					ajaxURL = "https://liugues-api.herokuapp.com/p/del_career";
+					ajaxURL = "http://localhost:5000/p/del_career";
+					//ajaxURL = "https://liugues-api.herokuapp.com/p/del_career";
 					data = {
 						p_id: p.p_id,
 						s_id: el.season.s_id,
@@ -250,10 +251,10 @@ export default Ember.Component.extend({
 						return true;
 					};
 					successFunc = function(data) {
-						self.send("showMessage", "player_success", "Player deleted successfully");
 						if (data.error) {
 							self.send("showMessage", "player_error", data.data);
 						} else {
+							self.send("showMessage", "player_success", "Player deleted successfully");
 							if (data.data) {
 								self.set("playerList", data.data);
 							} else {
@@ -293,8 +294,8 @@ export default Ember.Component.extend({
 			var self = this;
 			Ember.$("#choose_player_"+id)[0].style.display = "none";
 			Ember.$("#loading_player_"+id)[0].style.display = "initial";
-			//Ember.$.ajax("http://localhost:5000/g/career", {
-			Ember.$.ajax("https://liugues-api.herokuapp.com/g/career", {
+			Ember.$.ajax("http://localhost:5000/g/career", {
+			//Ember.$.ajax("https://liugues-api.herokuapp.com/g/career", {
 				method: "GET",
 				data: {p_id: id},
 				success: function(data) {

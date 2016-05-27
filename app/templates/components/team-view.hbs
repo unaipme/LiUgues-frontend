@@ -1,0 +1,118 @@
+{{#if isLoading}}
+	<center><img src="loading.gif" /></center>
+{{else if isError}}
+	<center>
+		{{#if errorMsg}}
+		<p>{{errorMsg}}</p>
+		<button onClick="window.history.back()">Go back</button>
+		{{else}}
+		<p>An error occurred when loading the information</p>
+		<button onClick="window.location.reload()">Try again</button>
+		{{/if}}
+	</center>
+{{else}}
+	<center>
+		<table id="team_view_wrap">
+			<tr>
+				<td rowspan="3"><img src="{{teamData.t_crest}}" style="width:150px" /></td>
+				<td colspan="4"><h1>{{teamData.t_name}}</h1></td>
+			</tr>
+			<tr>
+				<td colspan="4">Playing now in {{#with (arrayElement teamData.seasons 0) as |s|}}{{s.s_desc}}{{/with}}</td>
+			</tr>
+			<tr>
+				<td colspan="4">&nbsp;</td>
+			</tr>
+			<tr>
+				<td class="view_main_section" colspan="5">Squad</td>
+			</tr>
+			<tr>
+				<td class="view_sec_section" colspan="5">Goalkeepers</td>
+			</tr>
+			<tr>
+				<td>Name</td>
+				<td>Nationality</td>
+				<td>Goals</td>
+				<td>Yellow cards</td>
+				<td>Red cards</td>
+			</tr>
+			{{#each teamData.squad as |p|}}
+				{{#if (ifEqual p.pp_desc "Goalkeeper")}}
+					<tr class="team_player_el">
+						<td><span><b>{{p.p_sname}}</b>, {{p.p_name}}</span></td>
+						<td><abbr title="{{p.p_country}}"><img src="{{p.p_flag}}" style="width:20px; height:10px; border:1px solid black" /></abbr></td>
+						<td>{{p.p_goals}}</td>
+						<td>{{p.p_yellow_cards}}</td>
+						<td>{{p.p_red_cards}}</td>
+					</tr>
+				{{/if}}
+			{{/each}}
+			<tr>
+				<td class="view_sec_section" colspan="5">Defenders</td>
+			</tr>
+			<tr>
+				<td>Name</td>
+				<td>Nationality</td>
+				<td>Goals</td>
+				<td>Yellow cards</td>
+				<td>Red cards</td>
+			</tr>
+			{{#each teamData.squad as |p|}}
+				{{#if (ifEqual p.pp_desc "Defender")}}
+					<tr class="team_player_el">
+						<td><span><b>{{p.p_sname}}</b>, {{p.p_name}}</span></td>
+						<td><abbr title="{{p.p_country}}"><img src="{{p.p_flag}}" style="width:20px; height:10px; border:1px solid black" /></abbr></td>
+						<td>{{p.p_goals}}</td>
+						<td>{{p.p_yellow_cards}}</td>
+						<td>{{p.p_red_cards}}</td>
+					</tr>
+				{{/if}}
+			{{/each}}
+			<tr>
+				<td class="view_sec_section" colspan="5">Midfielders</td>
+			</tr>
+			<tr>
+				<td>Name</td>
+				<td>Nationality</td>
+				<td>Goals</td>
+				<td>Yellow cards</td>
+				<td>Red cards</td>
+			</tr>
+			{{#each teamData.squad as |p|}}
+				{{#if (ifEqual p.pp_desc "Midfielder")}}
+					<tr class="team_player_el">
+						<td><span><b>{{p.p_sname}}</b>, {{p.p_name}}</span></td>
+						<td><abbr title="{{p.p_country}}"><img src="{{p.p_flag}}" style="width:20px; height:10px; border:1px solid black" /></abbr></td>
+						<td>{{p.p_goals}}</td>
+						<td>{{p.p_yellow_cards}}</td>
+						<td>{{p.p_red_cards}}</td>
+					</tr>
+				{{/if}}
+			{{/each}}
+			<tr>
+				<td class="view_sec_section" colspan="5">Strikers</td>
+			</tr>
+			<tr>
+				<td>Name</td>
+				<td>Nationality</td>
+				<td>Goals</td>
+				<td>Yellow cards</td>
+				<td>Red cards</td>
+			</tr>
+			{{#each teamData.squad as |p|}}
+				{{#if (ifEqual p.pp_desc "Striker")}}
+					<tr class="team_player_el">
+						<td><span><b>{{p.p_sname}}</b>, {{p.p_name}}</span></td>
+						<td><abbr title="{{p.p_country}}"><img src="{{p.p_flag}}" style="width:20px; height:10px; border:1px solid black" /></abbr></td>
+						<td>{{p.p_goals}}</td>
+						<td>{{p.p_yellow_cards}}</td>
+						<td>{{p.p_red_cards}}</td>
+					</tr>
+				{{/if}}
+			{{/each}}
+		</table>
+	</center>
+	<div style="height:50px" />
+{{/if}}
+
+{{yield}}

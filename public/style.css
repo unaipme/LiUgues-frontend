@@ -55,6 +55,21 @@
 	display:none;
 }
 
+#team_view_wrap {
+	width: 85%;
+	font-family: 'Korolev Medium';
+	border-collapse: collapse;
+}
+
+#team_view_wrap td {
+	text-align:left;
+	padding: 5px;
+}
+
+#team_view_wrap tr:first-child td:first-child {
+	width: 170px;
+}
+
 table td:last-child {
 	text-align:right;
 }
@@ -363,6 +378,20 @@ option.team {
 	font-family: 'Slabo 27px';
 	font-size: 16px;
 	border-collapse: collapse;
+}
+
+.view_main_section {
+	background-color: #90A4AE;
+	font-size: 18px;
+}
+
+.view_sec_section {
+	background-color: #CFD8DC;
+}
+
+.team_player_el{
+	padding: 5px;
+	font-family: 'Slabo 27px';
 }
 
 @keyframes playing_match {

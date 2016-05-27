@@ -9,6 +9,7 @@ Router.map(function() {
   this.route('login');
   this.route('admin', {path: "/admin/:token"});
   this.route('what', {path: "*path"});
+  this.route('team', {path: "/team/:id"});
 });
 
 export default Router;
