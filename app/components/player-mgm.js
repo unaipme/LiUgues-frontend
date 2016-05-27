@@ -54,8 +54,8 @@ export default Ember.Component.extend({
 						s_id: Ember.$("#sign_new_season")[0].value,
 						t_id: Ember.$("#sign_new_team")[0].value
 					};
-					ajaxURL = "http://localhost:5000/p/ch_career";
-					//ajaxURL = "https://liugues-api.herokuapp.com/p/ch_career";
+					//ajaxURL = "http://localhost:5000/p/ch_career";
+					ajaxURL = "https://liugues-api.herokuapp.com/p/ch_career";
 					errorID = "player_s_error";
 					checkFunc = function() {
 						if (!data.p_id || !data.s_id || !data.t_id || data.p_id < 0 || data.s_id < 0 || data.t_id < 0) {
@@ -189,8 +189,8 @@ export default Ember.Component.extend({
 					})[0];
 					console.log(el);
 					name = p.p_name + " " + p.p_sname + " from " + el.team.t_name;
-					ajaxURL = "http://localhost:5000/p/del_career";
-					//ajaxURL = "https://liugues-api.herokuapp.com/p/del_career";
+					//ajaxURL = "http://localhost:5000/p/del_career";
+					ajaxURL = "https://liugues-api.herokuapp.com/p/del_career";
 					data = {
 						p_id: p.p_id,
 						s_id: el.season.s_id,
@@ -294,8 +294,8 @@ export default Ember.Component.extend({
 			var self = this;
 			Ember.$("#choose_player_"+id)[0].style.display = "none";
 			Ember.$("#loading_player_"+id)[0].style.display = "initial";
-			Ember.$.ajax("http://localhost:5000/g/career", {
-			//Ember.$.ajax("https://liugues-api.herokuapp.com/g/career", {
+			//Ember.$.ajax("http://localhost:5000/g/career", {
+			Ember.$.ajax("https://liugues-api.herokuapp.com/g/career", {
 				method: "GET",
 				data: {p_id: id},
 				success: function(data) {
