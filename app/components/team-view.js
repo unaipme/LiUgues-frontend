@@ -27,8 +27,5 @@ export default Ember.Component.extend({
 				self.set("isLoading", false);
 			}
 		});
-	},
-	actions: {
-		
 	}
 });

@@ -167,8 +167,12 @@
 				</td>
 			</tr>
 			<tr>
-				<td><button id="sign_up_button" disabled {{action "saveChanges" "signup"}}>Sign up</button></td>
-				<td><button {{action "discardChanges" "signup"}}>Change player</button></td>
+				{{#unless loadingCareer}}
+					<td><button id="sign_up_button" disabled {{action "saveChanges" "signup"}}>Sign up</button></td>
+					<td><button {{action "discardChanges" "signup"}}>Change player</button></td>
+				{{else}}
+					<td colspan="2" style="text-align:center"><img src="loading.gif" style="width:50px" /></td>
+				{{/unless}}
 			</tr>
 		</table>
 	{{/unless}}

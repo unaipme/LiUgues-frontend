@@ -12,6 +12,7 @@ export default Ember.Component.extend({
 	selectedCareer: null,
 	selectedSTeams: null,
 	loadingPlayer: false,
+	loadingCareer: false,
 	newPlayer: false,
 	actions: {
 		toggleElement(id) {
@@ -65,6 +66,9 @@ export default Ember.Component.extend({
 						}
 						return true;
 					};
+					beforeFunc = function() {
+						self.set("loadingCareer", true);
+					};
 					successFunc = function(data) {
 						if (data.error) {
 							self.send("showMessage", errorID, data.data);
@@ -93,10 +97,12 @@ export default Ember.Component.extend({
 									window.location.reload();
 								}, 1500);
 							}
+							self.set("loadingCareer", false);
 						}
 					};
 					errorFunc = function() {
 						self.send("showMessage", errorID, "An error occurred when approaching the database");
+						self.set("loadingCareer", false);
 					};
 				break;
 				case "player":

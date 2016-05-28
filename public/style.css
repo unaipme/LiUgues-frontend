@@ -381,16 +381,24 @@ option.team {
 }
 
 .view_main_section {
-	background-color: #90A4AE;
+	background-color: #00ACC1;
 	font-size: 18px;
+	color: #fff;
 }
 
 .view_sec_section {
-	background-color: #CFD8DC;
+	background-color: #B3E5FC;
+	border:2px solid white;
 }
 
-.team_player_el{
-	padding: 5px;
+.legend_view {
+	font-size: 15px;
+	font-family: 'Korolev Light';
+	border:3px solid white;
+}
+
+.team_player_el {
+	border:2px solid white;
 	font-family: 'Slabo 27px';
 }
 
