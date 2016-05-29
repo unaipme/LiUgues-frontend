@@ -18,7 +18,9 @@ export default Ember.Component.extend({
 	selectedLRounds: {},
 	selectedLRoundEl: 0,
 	gamePlayers: null,
-	eventLoading: false,
+	goalLoading: false,
+	stateLoading: false,
+	cardLoading: false,
 	actions: {
 		showMessage(id, txt) {
 			this.get("showMessage")(id, txt);
@@ -50,6 +52,67 @@ export default Ember.Component.extend({
 			var ajaxURL, errorID;
 			var checkFunc, beforeFunc, successFunc, errorFunc;
 			switch (f) {
+				case "card":
+					var id = parseInt(Ember.$("#card_player")[0].value);
+					var game = self.get("selectedLGame");
+					var team = self.get("teamList").filter(function(e) {
+						if (e.t_id === game.g_hometeam_id || e.t_id === game.g_awayteam_id) {
+							for (var i=0; i<e.squad.length; i++) {
+								if (e.squad[i].p_id === id) {
+									return true;
+								}
+							}
+						}
+						return false;
+					})[0];
+					data = {
+						c_player: id,
+						c_game: parseInt(game.g_id),
+						c_minute: parseInt(Ember.$("#card_minute")[0].value),
+						c_type: parseInt(Ember.$("#card_type")[0].value),
+						c_team: team.t_id
+					};
+					//ajaxURL = "http://localhost:5000/p/ch_card";
+					ajaxURL = "https://liugues-api.herokuapp.com/p/ch_card";
+					errorID = "live_error";
+					checkFunc = function() {
+						if (data.c_minute < 0 || data.c_minute > 95) {
+							self.send("showMessage", errorID, "Minute must be between 0 and 95");
+							return false;
+						}
+						if ([2,12,22].indexOf(data.c_type) === -1) {
+							self.send("showMessage", errorID, "Choose a card type");
+							return false;
+						}
+						return true;
+					};
+					beforeFunc = function() {
+						self.set("cardLoading", true);
+					};
+					successFunc = function(rsp) {
+						if (rsp.error) {
+							self.send("showMessage", errorID, rsp.data);
+						} else {
+							self.send("showMessage", "live_success", "Information updated");
+							if (rsp.data) {
+								console.log(rsp.data);
+								self.set("gameList", rsp.data);
+								self.set("selectedLGame", rsp.data.filter(function(e) {
+									return (data.c_game === e.g_id);
+								})[0]);
+							} else {
+								setTimeout(function() {
+									window.location.reload();
+								}, 1500);
+							}
+						}
+						self.set("cardLoading", false);
+					};
+					errorFunc = function() {
+						self.send("showMessage", errorID, "An error occurred approaching the database");
+						self.set("cardLoading", false);
+					};
+				break;
 				case "goal":
 					var p = self.get("gamePlayers").filter(function(e) {
 						return (e.p_id === parseInt(Ember.$("#goal_player")[0].value));
@@ -102,7 +165,7 @@ export default Ember.Component.extend({
 						return true;
 					};
 					beforeFunc = function() {
-						self.set("eventLoading", true);
+						self.set("goalLoading", true);
 					};
 					successFunc = function(rsp) {
 						if (rsp.error) {
@@ -122,11 +185,11 @@ export default Ember.Component.extend({
 						}
 						Ember.$("#goal_pty")[0].checked = false;
 						Ember.$("#goal_own")[0].checked = false;
-						self.set("eventLoading", false);
+						self.set("goalLoading", false);
 					};
 					errorFunc = function () {
 						self.send("showMessage", errorID, "An error occurred when approaching the database");
-						self.set("eventLoading", false);
+						self.set("goalLoading", false);
 					};
 				break;
 				case "gameState":
@@ -143,6 +206,9 @@ export default Ember.Component.extend({
 							return false;
 						}
 						return true;
+					};
+					beforeFunc = function() {
+						self.set("stateLoading", true);
 					};
 					successFunc = function(rsp) {
 						if (rsp.error) {
@@ -161,9 +227,11 @@ export default Ember.Component.extend({
 								}, 1500);
 							}
 						}
+						self.set("stateLoading", false);
 					};
 					errorFunc = function() {
 						self.send("showMessage", errorID, "An error occurred when approaching the database");
+						self.set("stateLoading", false);
 					};
 				break;
 				case "game":
@@ -252,6 +320,42 @@ export default Ember.Component.extend({
 			var checkFunc, successFunc, errorFunc;
 			var self = this;
 			switch (f) {
+				case "card":
+					data = {
+						c_id: id,
+						c_game: self.get("selectedLGame").g_id
+					};
+					name = "the card";
+					//ajaxURL = "http://localhost:5000/p/del_card";
+					ajaxURL = "https://liugues-api.herokuapp.com/p/del_card";
+					checkFunc = function() {
+						if (!data.c_id || !data.c_game) {
+							self.send("showMessage", "live_error", "There is information missing");
+							return false;
+						}
+						return true;
+					};
+					successFunc = function(rsp) {
+						if (rsp.error) {
+							self.send("showMessage", "live_error", rsp.data);
+						} else {
+							self.send("showMessage", "live_success", "Change saved successfully");
+							if (rsp.data) {
+								self.set("gameList", rsp.data);
+								self.set("selectedLGame", rsp.data.filter(function(e) {
+									return (data.c_game === e.g_id);
+								})[0]);
+							} else {
+								setTimeout(function() {
+									window.location.reload();
+								}, 1500);
+							}
+						}
+					};
+					errorFunc = function() {
+						self.send("showMessage", "game_error", "An error occurred when approaching the database");
+					};
+				break;
 				case "goal":
 					data = {
 						g_id: id,

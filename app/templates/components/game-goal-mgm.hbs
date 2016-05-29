@@ -172,9 +172,15 @@
 						</select>
 					</td>
 				</tr>
+				{{#unless stateLoading}}
 				<tr>
 					<td colspan="4"><button {{action "saveChanges" "gameState"}}>Submit state</button></td>
 				</tr>
+				{{else}}
+				<tr>
+					<td colspan="4"><img src="loading.gif" style="width:50px" /></td>
+				</tr>
+				{{/unless}}
 				{{#unless (ifEqual g.g_state 2)}}
 					<tr>
 						<td colspan="4" style="text-align:left"><b>Events:</b></td>
@@ -183,11 +189,14 @@
 						{{#each g.events as |e|}}
 							{{#if (ifEqual e.e_type 0)}}
 								<tr>
-									<td colspan="3"><img src="{{e.e_team_crest}}" style="width:20px" />{{e.e_player_name}} ({{e.e_minute}}') {{if e.e_penalty "(P.)"}}{{if e.e_attr "(O.G.)"}}</td>
+									<td colspan="3"><img src="{{e.e_team_crest}}" style="width:20px" /><img src="goal.png" style="width:15px" /> {{e.e_player_name}} ({{e.e_minute}}') {{if e.e_penalty "(P.)"}}{{if e.e_attr "(O.G.)"}}</td>
 									<td><button class="important_func" {{action "deleteElement" "goal" e.e_id}}>Delete</button></td>
 								</tr>
 							{{else}}
-								Card
+								<tr>
+									<td colspan="3"><img src="{{e.e_team_crest}}" style="width:20px" /><img src="card{{e.e_attr}}.png" style="width:20px" />{{e.e_player_name}}</td>
+									<td><button class="important_func" {{action "deleteElement" "card" e.e_id}}>Delete</button></td>
+								</tr>
 							{{/if}}
 						{{/each}}
 					{{else}}
@@ -198,13 +207,13 @@
 					<tr>
 						<td colspan="4" style="text-align:left"><b>New goal</b></td>
 					</tr>
-					<tr>
+					<tr style="text-align:center">
 						<td>Player</td>
 						<td style="width:35%">Minute</td>
 						<td>Penalty</td>
 						<td>Own goal</td>
 					</tr>
-					<tr>
+					<tr style="text-align:center">
 						<td>
 							<select id="goal_player" class="player">
 								<option disabled selected value="-1">Choose player</option>
@@ -223,9 +232,47 @@
 							<input type="checkbox" id="goal_own" />
 						</td>
 					</tr>
-					{{#unless eventLoading}}
+					{{#unless goalLoading}}
 					<tr>
 						<td colspan="4"><button {{action "saveChanges" "goal"}}>Save goal</button></td>
+					</tr>
+					{{else}}
+					<tr>
+						<td colspan="4"><img src="loading.gif" style="width:50px" /></td>
+					</tr>
+					{{/unless}}
+					<tr>
+						<td colspan="4" style="text-align:left"><b>New card</b></td>
+					</tr>
+					<tr style="text-align:center">
+						<td>Player</td>
+						<td style="width:35%">Minute</td>
+						<td colspan="2">Card type</td>
+					</tr>
+					<tr style="text-align:center">
+						<td>
+							<select id="card_player" class="player">
+								<option disabled selected value="-1">Choose player</option>
+								{{#each gamePlayers as |p|}}
+									<option style="background-image:url({{p.t_crest}})" value={{p.p_id}}>{{p.p_sname}}, {{p.p_name}}</option>
+								{{/each}}
+							</select>
+						</td>
+						<td style="width:35%">
+							<input style="width:35%" type="number" id="card_minute" min="0" max="95"/>
+						</td>
+						<td colspan="2">
+							<select id="card_type">
+								<option selected disabled value=-1>Choose one</option>
+								<option value=2>Yellow card</option>
+								<option value=12>Double yellow card</option>
+								<option value=22>Red card</option>
+							</select>
+						</td>
+					</tr>
+					{{#unless cardLoading}}
+					<tr>
+						<td colspan="4"><button {{action "saveChanges" "card"}}>Save card</button></td>
 					</tr>
 					{{else}}
 					<tr>
