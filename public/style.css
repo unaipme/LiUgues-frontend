@@ -70,6 +70,18 @@
 	width: 170px;
 }
 
+#last_games_table {
+	width:100%;
+}
+
+#last_games_table td:nth-child(6) {
+	text-align: right;
+}
+
+#last_games_table a {
+	text-decoration:none;
+}
+
 table td:last-child {
 	text-align:right;
 }

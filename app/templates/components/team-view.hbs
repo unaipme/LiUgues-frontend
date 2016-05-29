@@ -24,6 +24,36 @@
 				<td colspan="4">&nbsp;</td>
 			</tr>
 			<tr class="view_main_section">
+				<td colspan="5">Last games</td>
+			</tr>
+			{{#if teamData.last_games}}
+				<tr>
+					<td colspan="5">
+						<table id="last_games_table">
+							{{#each teamData.last_games as |g|}}
+								<tr>
+									<td style="width:5%"><img src="{{g.g_hometeam_crest}}" style="width:40px" /></td>
+									{{#if (ifEqual g.g_hometeam_id id)}}
+									<td style="width:39%">{{g.g_hometeam}}</td>
+									{{else}}
+									<td style="width:39%"><a href="/team/{{g.g_hometeam_id}}">{{g.g_hometeam}}</a></td>
+									{{/if}}
+									<td style="width:4%">{{g.g_hometeam_goals}}</td>
+									<td style="width:4%">-</td>
+									<td style="width:4%">{{g.g_awayteam_goals}}</td>
+									{{#if (ifEqual g.g_awayteam_id id)}}
+									<td style="width:39%">{{g.g_awayteam}}</td>
+									{{else}}
+									<td style="width:39%"><a href="/team/{{g.g_awayteam_id}}">{{g.g_awayteam}}</a></td>
+									{{/if}}
+									<td style="width:5%"><img src="{{g.g_awayteam_crest}}" style="width:40px" /></td>
+								</tr>
+							{{/each}}
+						</table>
+					</td>
+				</tr>
+			{{/if}}
+			<tr class="view_main_section">
 				<td colspan="5">Squad</td>
 			</tr>
 			<tr class="view_sec_section">
