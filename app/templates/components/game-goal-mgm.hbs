@@ -113,5 +113,133 @@
 	</table>
 	<div id="game_error_wrap" class="error_dsp_wrap"><span id="game_success" class="success_dsp" /><span id="game_error" class="error_dsp" /></div>
 </div>
+<hr />
+<div id="live_mgm_h" class="panel_block_header" {{action "toggleElement" "#live_mgm_h"}}>
+	Live management<img class="expand_arrow" src="arrow.png" style="width:25px;"/>
+</div>
+<div id="live_mgm_c" class="panel_block_content">
+	{{#unless selectedLGame}}
+		<select id="live_season_select" onChange={{action "loadRounds"}}>
+			<option disabled selected>Choose a season</option>
+			{{#each seasonList as |s|}}
+				<option value={{s.s_id}}>{{s.s_desc}}</option>
+			{{/each}}
+		</select>
+		{{#if selectedLRounds}}
+			{{#with (arrayElement selectedLRounds selectedLRoundEl) as |r|}}
+				<center>
+					<div class="exp_subsection_h" id="ch_lround_wrap">
+						<img class="left_arrow" src="arrow2.png" style="width:25px" {{action "scrollListLive" -1}}/><img class="right_arrow" src="arrow2.png" style="width:25px" {{action "scrollListLive" 1}}/><span>{{r.r_desc}}</span>
+					</div>
+					<div class="exp_subsection_c" style="display:initial">
+						<table class="admin_panel_table">
+							{{#unless selectedLRGames}}
+								<tr>
+									<td colspan="2">There are no games created for this round</td>
+								</tr>
+							{{else}}
+								{{#each selectedLRGames as |g|}}
+									<tr>
+										<td><span style="float:left"><img src="{{g.g_hometeam_crest}}" style="width:18px" />{{g.g_hometeam}}</span><span style="float:right">{{g.g_awayteam}}<img src="{{g.g_awayteam_crest}}" style="width:18px" /></span></td>
+										<td><button {{action "showLiveGame" g.g_id}}>Modify</button></td>
+									</tr>
+								{{/each}}
+							{{/unless}}
+						</table>
+					</div>
+				</center>
+			{{/with}}
+		{{else}}
+		<p>There are no rounds created for this season</p>
+		{{/if}}
+	{{else}}
+		{{#with selectedLGame as |g|}}
+			<table class="admin_panel_table">
+				<tr>
+					<td colspan="4" style="text-align:center"><img src="{{g.g_hometeam_crest}}" style="width:18px" />{{g.g_hometeam}} {{g.g_hometeam_goals}} - {{g.g_awayteam_goals}} {{g.g_awayteam}}<img src="{{g.g_awayteam_crest}}" style="width:18px" /></td>
+				</tr>
+				<tr>
+					<td>Game state</td>
+					<td colspan="3">
+						<select id="game_state_select">
+							{{#each stateList as |s|}}
+								{{#if (ifEqual s.id g.g_state)}}
+								<option value={{s.id}} selected>{{s.desc}}</option>
+								{{else}}
+								<option value={{s.id}}>{{s.desc}}</option>
+								{{/if}}
+							{{/each}}
+						</select>
+					</td>
+				</tr>
+				<tr>
+					<td colspan="4"><button {{action "saveChanges" "gameState"}}>Submit state</button></td>
+				</tr>
+				{{#unless (ifEqual g.g_state 2)}}
+					<tr>
+						<td colspan="4" style="text-align:left"><b>Events:</b></td>
+					</tr>
+					{{#if g.events}}
+						{{#each g.events as |e|}}
+							{{#if (ifEqual e.e_type 0)}}
+								<tr>
+									<td colspan="3"><img src="{{e.e_team_crest}}" style="width:20px" />{{e.e_player_name}} ({{e.e_minute}}') {{if e.e_penalty "(P.)"}}{{if e.e_attr "(O.G.)"}}</td>
+									<td><button class="important_func" {{action "deleteElement" "goal" e.e_id}}>Delete</button></td>
+								</tr>
+							{{else}}
+								Card
+							{{/if}}
+						{{/each}}
+					{{else}}
+						<tr>
+							<td colspan="4">There are no events for this game</td>
+						</tr>
+					{{/if}}
+					<tr>
+						<td colspan="4" style="text-align:left"><b>New goal</b></td>
+					</tr>
+					<tr>
+						<td>Player</td>
+						<td style="width:35%">Minute</td>
+						<td>Penalty</td>
+						<td>Own goal</td>
+					</tr>
+					<tr>
+						<td>
+							<select id="goal_player" class="player">
+								<option disabled selected value="-1">Choose player</option>
+								{{#each gamePlayers as |p|}}
+									<option style="background-image:url({{p.t_crest}})" value={{p.p_id}}>{{p.p_sname}}, {{p.p_name}}</option>
+								{{/each}}
+							</select>
+						</td>
+						<td style="width:35%">
+							<input style="width:35%" type="number" id="goal_minute" min="0" max="95"/>
+						</td>
+						<td>
+							<input type="checkbox" id="goal_pty" />
+						</td>
+						<td>
+							<input type="checkbox" id="goal_own" />
+						</td>
+					</tr>
+					{{#unless eventLoading}}
+					<tr>
+						<td colspan="4"><button {{action "saveChanges" "goal"}}>Save goal</button></td>
+					</tr>
+					{{else}}
+					<tr>
+						<td colspan="4"><img src="loading.gif" style="width:50px" /></td>
+					</tr>
+					{{/unless}}
+				{{/unless}}
+				<tr>
+					<td colspan="4"><button {{action "discardChanges" "liveGame"}}>Change game</button></td>
+				</tr>
+			</table>
+		{{/with}}
+	{{/unless}}
+	<div id="live_error_wrap" class="error_dsp_wrap"><span id="live_success" class="success_dsp" /><span id="live_error" class="error_dsp" /></div>
+</div>
 
 {{yield}}

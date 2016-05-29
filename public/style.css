@@ -161,6 +161,14 @@ option.team {
 	background-size: 40px;
 }
 
+select.player {
+	width: 100%;
+}
+
+select.player option {
+	background-size: 40px;
+}
+
 .korolev_bold {
 	font-family:'Korolev Bold';
 }

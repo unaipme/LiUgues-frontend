@@ -37,7 +37,7 @@
 			{{else if (ifEqual 2 chosenTab)}}
 				{{team-season-mgm toggleElement=(action "toggleElement") showMessage=(action "showMessage") teamList=teamList countryList=countryList seasonList=seasonList}}
 			{{else if (ifEqual 3 chosenTab)}}
-				{{game-goal-mgm toggleElement=(action "toggleElement") showMessage=(action "showMessage") gameList=gameList roundList=roundList seasonList=seasonList teamList=teamList}}
+				{{game-goal-mgm toggleElement=(action "toggleElement") showMessage=(action "showMessage") gameList=gameList roundList=roundList seasonList=seasonList teamList=teamList playerList=playerList}}
 			{{else if (ifEqual 4 chosenTab)}}
 				{{player-mgm toggleElement=(action "toggleElement") showMessage=(action "showMessage") playerList=playerList teamList=teamList seasonList=seasonList countryList=countryList}}
 			{{/if}}

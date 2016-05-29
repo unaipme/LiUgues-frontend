@@ -21,7 +21,8 @@
 				<td colspan="4">Playing now in {{#with (arrayElement teamData.seasons 0) as |s|}}{{s.s_desc}}{{/with}}</td>
 			</tr>
 			<tr>
-				<td colspan="4">&nbsp;</td>
+				<td colspan="2">Home city: {{teamData.t_city}}</td>
+				<td colspan="2">Stadium: {{teamData.t_stadium}}</td>
 			</tr>
 			<tr class="view_main_section">
 				<td colspan="5">Last games</td>
@@ -80,7 +81,7 @@
 			<tr>
 				<td class="view_sec_section" colspan="5">Defenders</td>
 			</tr>
-			<tr>
+			<tr class="legend_view">
 				<td>Name</td>
 				<td>Nationality</td>
 				<td>Goals</td>
@@ -101,7 +102,7 @@
 			<tr>
 				<td class="view_sec_section" colspan="5">Midfielders</td>
 			</tr>
-			<tr>
+			<tr class="legend_view">
 				<td>Name</td>
 				<td>Nationality</td>
 				<td>Goals</td>
@@ -122,7 +123,7 @@
 			<tr>
 				<td class="view_sec_section" colspan="5">Strikers</td>
 			</tr>
-			<tr>
+			<tr class="legend_view">
 				<td>Name</td>
 				<td>Nationality</td>
 				<td>Goals</td>

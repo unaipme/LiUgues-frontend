@@ -6,7 +6,7 @@ export default Ember.Component.extend({
 	teamList: null,
 	countryList: null,
 	positionList: [{id: 2, desc: "Goalkeeper"},{id: 12, desc: "Defender"},{id: 22, desc: "Midfielder"},{id: 32, desc: "Striker"}],
-	alphabet: "A\u00c5BCDEFGHIJKLMNO\u00d6PQRSTUVWXYZ".split(""),
+	alphabet: "A\u00C1\u00c5BCDEFGHIJKLMNO\u00d6PQRSTUVWXYZ".split(""),
 	selectedPlayer: null,
 	selectedSPlayer: null,
 	selectedCareer: null,
