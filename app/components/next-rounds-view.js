@@ -4,11 +4,13 @@ export default Ember.Component.extend({
 	isLoading: true,
 	isError: false,
 	gameList: null,
+	ajaxURL: null,
 	init: function() {
 		this._super();
+		console.log("HEEEY",this.get("ajaxURL"));
 		var self = this;
-		//Ember.$.ajax("http://localhost:5000/g/next_games", {
-		Ember.$.ajax("https://liugues-api.herokuapp.com/g/next_games", {
+		var url = self.get("ajaxURL");
+		Ember.$.ajax(url, {
 			method: "GET",
 			success: function(data) {
 				console.log("Success");

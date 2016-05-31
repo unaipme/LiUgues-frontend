@@ -1,0 +1,11 @@
+<div id="next_last_wrap">
+	<div id="next_round_cont" class="home_button" {{action "show" "next_games"}}>Next games</div>
+	<div id="last_round_cont" class="home_button" {{action "show" "last_games"}}>Last games</div>
+</div>
+{{#if (ifEqual showID 0)}}
+	{{next-rounds-view ajaxURL="https://liugues-api.herokuapp.com/g/next_games"}}
+{{else if (ifEqual showID 1)}}
+	{{next-rounds-view ajaxURL="https://liugues-api.herokuapp.com/g/last_games"}}
+{{/if}}
+
+{{yield}}

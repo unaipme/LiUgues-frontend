@@ -14,16 +14,24 @@
 			{{/if}}
 			<table class="round_game_list">
 				{{#each r.games as |g|}}
-					<tr class="{{unless (ifEqual g.g_state 2) "playing_game"}}">
+					<tr class="{{if (xIn g.g_state 12 22 32) "playing_game"}}">
 						<td rowspan="2"><img src="{{g.g_hometeam_crest}}" class="game_crest_view" /></td>
+						{{#if (and (ifEqual g.g_state 42) (gt g.g_hometeam_goals g.g_awayteam_goals))}}
+							<td><b>{{g.g_hometeam}}</b></td>
+						{{else}}
 						<td>{{g.g_hometeam}}</td>
+						{{/if}}
 						<td>{{g.g_hometeam_goals}}</td>
 						<td>-</td>
 						<td>{{g.g_awayteam_goals}}</td>
+						{{#if (and (ifEqual g.g_state 42) (gt g.g_awayteam_goals g.g_hometeam_goals))}}
+							<td><b>{{g.g_awayteam}}</b></td>
+						{{else}}
 						<td>{{g.g_awayteam}}</td>
+						{{/if}}
 						<td rowspan="2"><img src="{{g.g_awayteam_crest}}" class="game_crest_view" /></td>
 					</tr>
-					<tr class="{{unless (ifEqual g.g_state 2) "playing_game"}}">
+					<tr class="{{if (xIn g.g_state 12 22 32) "playing_game"}}">
 						<td style="text-align:center" colspan="5">
 							{{#if (ifEqual g.g_state 2)}}
 								{{g.g_when}}
@@ -40,6 +48,11 @@
 							{{else}}
 								Postponed
 							{{/if}}
+						</td>
+					</tr>
+					<tr class="{{if (xIn g.g_state 12 22 32) "playing_game"}}">
+						<td style="text-align:center;font-size:13px" colspan="7">
+							<a href="/game/{{g.g_id}}">+info</a>
 						</td>
 					</tr>
 				{{/each}}

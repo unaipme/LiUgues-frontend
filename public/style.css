@@ -55,19 +55,49 @@
 	display:none;
 }
 
-#team_view_wrap {
+#team_view_wrap, #game_view_wrap {
 	width: 85%;
 	font-family: 'Korolev Medium';
 	border-collapse: collapse;
 }
 
-#team_view_wrap td {
+#team_view_wrap td, #game_view_wrap td {
 	text-align:left;
 	padding: 5px;
 }
 
+#game_view_wrap td {
+	width:10%;
+}
+
+#game_view_wrap td:first-child, #game_view_wrap td:last-child {
+	width:35%;
+}
+
 #team_view_wrap tr:first-child td:first-child {
 	width: 170px;
+}
+
+#game_event_table {
+	width: 100%;
+	border-collapse: collapse;
+	font-family: 'Slabo 27px';
+}
+
+#game_event_table td {
+	width:30%;
+}
+
+#game_event_table tr:nth-child(odd) {
+	background-color: #e0e0e0;
+}
+
+#game_event_table td:first-child, #game_event_table td:last-child {
+	width:5%;
+}
+
+#game_event_table td:nth-child(2), #game_event_table td:nth-child(5){
+	width:5%;
 }
 
 #last_games_table {
@@ -78,8 +108,27 @@
 	text-align: right;
 }
 
-#last_games_table a {
-	text-decoration:none;
+#next_last_wrap {
+	width:100%;
+	box-sizing: content-box;
+	margin-top: 15px;
+	margin-bottom: 15px;
+}
+
+#next_last_wrap div {
+	box-sizing: padding-box;
+	width:49%;
+	display: inline-block;
+	font-size: 20px;
+	text-align: center;
+	background-color: #CFD8DC;
+	font-family: 'Korolev Medium';
+	padding:5px;
+}
+
+#next_last_wrap div:hover {
+	cursor:pointer;
+	background-color:#54D8E0;
 }
 
 table td:last-child {
@@ -114,6 +163,11 @@ select {
 	font-family: 'Slabo 27px', arial;
 	font-size: 15px;
 	width: 100%;
+}
+
+a {
+	text-decoration:none;
+	color:#551A93;
 }
 
 select option {

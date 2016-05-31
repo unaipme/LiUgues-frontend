@@ -181,7 +181,7 @@
 					<td colspan="4"><img src="loading.gif" style="width:50px" /></td>
 				</tr>
 				{{/unless}}
-				{{#unless (ifEqual g.g_state 2)}}
+				{{#unless (xIn g.g_state 2 42 52 62)}}
 					<tr>
 						<td colspan="4" style="text-align:left"><b>Events:</b></td>
 					</tr>
