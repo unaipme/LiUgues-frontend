@@ -189,12 +189,12 @@
 						{{#each g.events as |e|}}
 							{{#if (ifEqual e.e_type 0)}}
 								<tr>
-									<td colspan="3"><img src="{{e.e_team_crest}}" style="width:20px" /><img src="goal.png" style="width:15px" /> {{e.e_player_name}} ({{e.e_minute}}') {{if e.e_penalty "(P.)"}}{{if e.e_attr "(O.G.)"}}</td>
+									<td colspan="3"><img src="{{e.e_team_crest}}" style="width:20px" /><img src="game/goal.png" style="width:15px" /> {{e.e_player_name}} ({{e.e_minute}}') {{if e.e_penalty "(P.)"}}{{if e.e_attr "(O.G.)"}}</td>
 									<td><button class="important_func" {{action "deleteElement" "goal" e.e_id}}>Delete</button></td>
 								</tr>
 							{{else}}
 								<tr>
-									<td colspan="3"><img src="{{e.e_team_crest}}" style="width:20px" /><img src="card{{e.e_attr}}.png" style="width:20px" />{{e.e_player_name}}</td>
+									<td colspan="3"><img src="{{e.e_team_crest}}" style="width:20px" /><img src="game/card{{e.e_attr}}.png" style="width:20px" />{{e.e_player_name}} ({{e.e_minute}}')</td>
 									<td><button class="important_func" {{action "deleteElement" "card" e.e_id}}>Delete</button></td>
 								</tr>
 							{{/if}}
