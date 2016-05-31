@@ -1,0 +1,55 @@
+{{#if isLoading}}
+	<center><img src="loading.gif" /></center>
+{{else if isError}}
+	<center>
+		{{#if errorMsg}}
+		<p>{{errorMsg}}</p>
+		<button onClick="window.history.back()">Go back</button>
+		{{else}}
+		<p>An error occurred when loading the information</p>
+		<button onClick="window.location.reload()">Try again</button>
+		{{/if}}
+	</center>
+{{else}}
+	<br />
+	<center>
+		{{#with (arrayElement ranking 0) as |r|}}
+		{{#if r.r_logo}}
+			<div class="round_view_header">{{r.r_season}}</div>
+			<span class="season_logo_view" style="background-image:url({{r.r_logo}})" />
+		{{else}}
+			<div class="round_view_header">{{r.r_season}}</div>
+		{{/if}}
+		{{/with}}
+		<table id="ranking_table">
+			<tr>
+				<th>#</th>
+				<th>Team</th>
+				<th>Points</th>
+				<th><abbr title="Played games">PG</abbr></th>
+				<th><abbr title="Won games">WG</abbr></th>
+				<th><abbr title="Drawn games">DG</abbr></th>
+				<th><abbr title="Lost games">LG</abbr></th>
+				<th><abbr title="Goals scored">GS</abbr></th>
+				<th><abbr title="Goals received">GR</abbr></th>
+			</tr>
+			{{#each ranking as |r i|}}
+			<tr>
+				<td>{{math i "+" 1}}</td>
+				<td><img src="{{r.r_team_crest}}" style="width:20px" /> <a href="/team/{{r.r_team_id}}">{{r.r_team}}</a></td>
+				<td>{{r.r_points}}</td>
+				<td>{{r.r_played_games}}</td>
+				<td>{{r.r_won_games}}</td>
+				<td>{{r.r_drawn_games}}</td>
+				<td>{{r.r_lost_games}}</td>
+				<td>{{r.r_made_goals}}</td>
+				<td>{{r.r_received_goals}}</td>
+			</tr>
+			{{/each}}
+		</table>
+	</center>
+	<br />
+	<br />
+{{/if}}
+
+{{yield}}

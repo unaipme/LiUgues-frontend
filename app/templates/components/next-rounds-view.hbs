@@ -7,10 +7,10 @@
 	{{else}}
 		{{#each gameList as |r|}}
 			{{#if r.l_logo}}
-				<div class="round_view_header">{{r.r_desc}}</div>
+				<div class="round_view_header"><a href="/league/{{r.r_season}}" style="color:#fff">{{r.r_desc}}</a></div>
 				<span class="season_logo_view" style="background-image:url({{r.l_logo}})" />
 			{{else}}
-				<div class="round_view_header">{{r.r_desc}}</div>
+				<div class="round_view_header"><a href="/league/{{r.r_season}}" style="color:#fff">{{r.r_desc}}</a></div>
 			{{/if}}
 			<table class="round_game_list">
 				{{#each r.games as |g|}}

@@ -10,6 +10,7 @@ Router.map(function() {
   this.route('admin', {path: "/admin/:token"});
   this.route('team', {path: "/team/:id"});
   this.route('game', {path: "/game/:id"});
+  this.route('league', {path: "/league/:id"});
   this.route('what', {path: "*path"});
 });
 

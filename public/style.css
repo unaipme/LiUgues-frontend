@@ -131,6 +131,47 @@
 	background-color:#54D8E0;
 }
 
+#ranking_table {
+	width:85%;
+	position: relative;
+	top: -40px;
+	font-family: 'Slabo 27px';
+	border-collapse: collapse;
+}
+
+#ranking_table tr:nth-child(odd) {
+	background-color: #e0e0e0;
+}
+
+#ranking_table td {
+	text-align: center;
+	padding: 4px;
+}
+
+#ranking_table a {
+	color:#000;
+}
+#ranking_table a:hover {
+	text-decoration: underline;
+}
+
+#ranking_table th {
+	text-align: center;
+	background-color: #00ACC1;
+	color: #fff;
+	padding: 5px;
+	font-family: 'Korolev Medium';
+}
+
+#ranking_table th:nth-child(2) {
+	text-align: left;
+}
+
+#ranking_table td:nth-child(2) {
+	font-family: 'Korolev Medium';
+	text-align:left;
+}
+
 table td:last-child {
 	text-align:right;
 }
