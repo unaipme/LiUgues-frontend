@@ -194,7 +194,17 @@
 								</tr>
 							{{else}}
 								<tr>
-									<td colspan="3"><img src="{{e.e_team_crest}}" style="width:20px" /><img src="game/card{{e.e_attr}}.png" style="width:20px" />{{e.e_player_name}} ({{e.e_minute}}')</td>
+									<td colspan="3">
+										<img src="{{e.e_team_crest}}" style="width:20px" />
+										{{#if (ifEqual e.e_attr 2)}}
+										<img src="game/card2.png" style="width:20px" />
+										{{else if (ifEqual e.e_attr 12)}}
+										<img src="game/card12.png" style="width:20px" />
+										{{else}}
+										<img src="game/card22.png" style="width:20px" />
+										{{/if}}
+										{{e.e_player_name}} ({{e.e_minute}}')
+									</td>
 									<td><button class="important_func" {{action "deleteElement" "card" e.e_id}}>Delete</button></td>
 								</tr>
 							{{/if}}

@@ -109,7 +109,7 @@
 }
 
 #next_last_wrap {
-	width:100%;
+	width:85%;
 	box-sizing: content-box;
 	margin-top: 15px;
 	margin-bottom: 15px;
@@ -181,6 +181,7 @@ select option {
 h1.header_title {
 	line-height: 0%;
 	font-size: 75px;
+	color: #000;
 }
 
 table.admin_panel_table {
