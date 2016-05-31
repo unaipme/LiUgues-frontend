@@ -60,7 +60,13 @@
 										{{#if (ifEqual e.e_type 0)}}
 											<img src="game/goal.png" style="width:10px" />
 										{{else}}
-											<img src="game/card{{e.e_attr}}.png" style="width:15px" />
+											{{#if (ifEqual e.e_attr 2)}}
+											<img src="game/card2.png" style="width:15px" />
+											{{else if (ifEqual e.e_attr 12)}}
+											<img src="game/card12.png" style="width:15px" />
+											{{else}}
+											<img src="game/card22.png" style="width:15px" />
+											{{/if}}
 										{{/if}}
 									</td>
 									<td>{{e.e_minute}}'</td>
