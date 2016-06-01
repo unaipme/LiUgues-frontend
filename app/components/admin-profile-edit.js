@@ -11,6 +11,7 @@ export default Ember.Component.extend({
 		showMessage(id, txt) {
 			this.get("showMessage")(id, txt);
 		},
+		//Run when the user clicks the button to change their password
 		changePassword() {
 			const id = "ch_pass_error";
 			var cur_pass = Ember.$("#ch_pass_old_pass")[0].value;
@@ -35,9 +36,9 @@ export default Ember.Component.extend({
 				},
 				success: function(data) {
 					if (data.error) {
-						self.send("showMessage", id, data.msg);
+						self.send("showMessage", id, data.data);
 					} else {
-						self.send("showMessage", "ch_pass_success", data.msg);
+						self.send("showMessage", "ch_pass_success", data.data);
 					}
 					Ember.$("#ch_pass_old_pass")[0].value = "";
 					Ember.$("#ch_pass_new_pass")[0].value = "";
@@ -48,6 +49,7 @@ export default Ember.Component.extend({
 				}
 			});
 		},
+		//Generates a random temporal password for the new user
 		generatePassword() {
 			var letters = "abcdefghiklmnopqrstuvwwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
 			var pass = "";
@@ -58,6 +60,7 @@ export default Ember.Component.extend({
 			Ember.$("#reg_new_password")[0].value = pass;
 			this.set("registerAllowed", true);
 		},
+		//Sends the information of the new user to register to the database
 		register() {
 			const id = "reg_error";
 			var u = Ember.$("#reg_new_username")[0].value;
@@ -76,10 +79,10 @@ export default Ember.Component.extend({
 				},
 				success: function(data) {
 					if (!data.error) {
-						self.send("showMessage", "reg_success", data.msg);
+						self.send("showMessage", "reg_success", data.data);
 					} else {
 						console.log(data);
-						self.send("showMessage", id, data.msg);
+						self.send("showMessage", id, data.data);
 					}
 				},
 				error: function() {

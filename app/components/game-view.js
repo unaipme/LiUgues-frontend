@@ -6,6 +6,11 @@ export default Ember.Component.extend({
 	isError: false,
 	errorMsg: null,
 	gameData: null,
+	// When the component is loaded, the below init() function will retrieve all the 
+	//needed information for the page to display
+	// The isError variable, if true, will display an error message
+	// The isLoading variable, while true, will display a loading animation
+	// If the data has been correctly retrieved, both will be false, and gameData will be set
 	init: function() {
 		this._super();
 		var self = this;

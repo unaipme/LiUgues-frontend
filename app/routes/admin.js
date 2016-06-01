@@ -11,7 +11,7 @@ export default Ember.Route.extend({
 			data: {token: tkn},
 			success: function(data) {
 				if (!data.login) {
-					alert(data.msg);
+					alert(data.data);
 					self.transitionTo("/login");
 				} else {
 					console.log("Correctly logged in");

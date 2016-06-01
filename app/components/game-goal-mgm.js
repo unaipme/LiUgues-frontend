@@ -28,6 +28,7 @@ export default Ember.Component.extend({
 		toggleElement(id) {
 			this.get("toggleElement")(id);
 		},
+		//Standard function that will discard the made changes and go back one step
 		discardChanges(f) {
 			switch(f) {
 				case "game":
@@ -46,6 +47,7 @@ export default Ember.Component.extend({
 				break;
 			}
 		},
+		//Standard function that submits the changes or new additions to the database
 		saveChanges(f) {
 			var self = this;
 			var data;
@@ -314,6 +316,7 @@ export default Ember.Component.extend({
 				}
 			});
 		},
+		//Standard function to delete an element from the database
 		deleteElement(f, id) {
 			var name, ajaxURL;
 			var data;
@@ -437,6 +440,8 @@ export default Ember.Component.extend({
 				}
 			});
 		},
+		// Used to display all rounds and games of a season when one is selected in the
+		//game management section
 		loadSeason() {
 			var id = parseInt(Ember.$("#ch_game_season")[0].value);
 			var self = this;
@@ -459,6 +464,7 @@ export default Ember.Component.extend({
 			self.set("selectedSeason", s);
 			self.set("selectedSRGames", g);
 		},
+		//Run when a game is selected for modifications in the game management section
 		loadGame(id) {
 			if (id === -1) {
 				this.set("selectedEGame", {});
@@ -484,6 +490,7 @@ export default Ember.Component.extend({
 				}
 			}
 		},
+		//function to emulate a scrolling in the round list, when one of the arrows is pressed
 		scrollList(n) {
 			var v = this.get("selectedSRoundEl");
 			var nv = v + n;
@@ -500,6 +507,7 @@ export default Ember.Component.extend({
 			this.set("selectedSRGames", g);
 			this.set("selectedSRoundEl", nv);
 		},
+		//A different function that makes the same as the previous one but with another list
 		scrollListLive(n) {
 			var v = this.get("selectedLRoundEl");
 			var nv = v + n;
@@ -516,6 +524,7 @@ export default Ember.Component.extend({
 			this.set("selectedLRGames", g);
 			this.set("selectedLRoundEl", nv);
 		},
+		//Loads the rounds of the season selected in the live management section
 		loadRounds() {
 			var id = parseInt(Ember.$("#live_season_select")[0].value);
 			var l = this.get("roundList").filter(function(e) {
@@ -535,6 +544,7 @@ export default Ember.Component.extend({
 			this.set("selectedLRounds", l);
 			this.set("selectedLRoundEl", 0);
 		},
+		//When a game is selected in the live management section, this function loads the info.
 		showLiveGame(id) {
 			var g = this.get("gameList").filter(function(e) {
 				return (e.g_id === id);

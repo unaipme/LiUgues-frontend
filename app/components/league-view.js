@@ -6,6 +6,7 @@ export default Ember.Component.extend({
 	isError: false,
 	errorMsg: null,
 	ranking: null,
+	//When the component initializes, the function below loads the ranking information for the given season ID
 	init: function() {
 		this._super();
 		var self = this;

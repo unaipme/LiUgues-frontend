@@ -22,6 +22,7 @@ export default Ember.Component.extend({
 		showMessage(id, txt) {
 			this.get("showMessage")(id, txt);
 		},
+		//Toggles the view in the team management section to enable the modification of team information
 		updateTeam(id) {
 			var teamList = this.get("teamList");
 			for (var i in teamList) {
@@ -36,6 +37,7 @@ export default Ember.Component.extend({
 			this.set("selectedTeam", {});
 			this.set("selectedTeamIndex", -1);
 		},
+		//Standard function to discard changes and give one step back
 		discardChanges(f) {
 			switch (f) {
 				case "team":
@@ -49,6 +51,7 @@ export default Ember.Component.extend({
 				break;
 			}
 		},
+		//Standard function to send the changes to the backend
 		saveChanges(f) {
 			var self = this;
 			var data;
@@ -83,7 +86,7 @@ export default Ember.Component.extend({
 						}
 					};
 					successFunc = function(data) {
-						self.send("showMessage", "team_success", data.msg);
+						self.send("showMessage", "team_success", data.data);
 						setTimeout(function() {
 							window.location.reload();
 						}, 1500);
@@ -109,9 +112,9 @@ export default Ember.Component.extend({
 					};
 					successFunc = function(data) {
 						if (data.error) {
-							self.send("showMessage", errorID, data.msg);
+							self.send("showMessage", errorID, data.data);
 						} else {
-							self.send("showMessage", "signup_success", data.msg);
+							self.send("showMessage", "signup_success", data.data);
 							setTimeout(function() {
 								window.location.reload();
 							}, 1500);
@@ -149,6 +152,7 @@ export default Ember.Component.extend({
 				}
 			});
 		},
+		//Standard function to delete an element
 		deleteElement(f, id) {
 			var name, ajaxURL;
 			var data;
@@ -168,10 +172,10 @@ export default Ember.Component.extend({
 					};
 					successFunc = function(data) {
 						if (data.error) {
-							self.send("showMessage", "team_error", data.msg);
+							self.send("showMessage", "team_error", data.data);
 							return;
 						}
-						self.send("showMessage", "team_success", data.msg);
+						self.send("showMessage", "team_success", data.data);
 						setTimeout(function() {
 							window.location.reload();
 						}, 1500);
@@ -201,10 +205,10 @@ export default Ember.Component.extend({
 					};
 					successFunc = function(data) {
 						if (data.error) {
-							self.send("showMessage", "signup_error", data.msg);
+							self.send("showMessage", "signup_error", data.data);
 							return;
 						}
-						self.send("showMessage", "signup_success", data.msg);
+						self.send("showMessage", "signup_success", data.data);
 						setTimeout(function() {
 							window.location.reload();
 						}, 1500);
@@ -232,6 +236,7 @@ export default Ember.Component.extend({
 				}
 			});
 		},
+		//Searches for a team matching the input in the team sign up section
 		searchTeam() {
 			var t = Ember.$("#team_search_field")[0].value;
 			var l = Ember.$("#matching_team_list")[0];
@@ -248,6 +253,7 @@ export default Ember.Component.extend({
 				}});
 			}
 		},
+		//Loads the information of the team selected for sign up
 		chooseForSignup(id) {
 			var self = this;
 			Ember.$("#signup_choose_"+id)[0].style.display = "none";

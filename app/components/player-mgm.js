@@ -21,6 +21,7 @@ export default Ember.Component.extend({
 		showMessage(id, txt) {
 			this.get("showMessage")(id, txt);
 		},
+		//Enables the view to modify the information or create a new player
 		loadPlayer(id) {
 			if (id === -1) {
 				this.set("selectedPlayer", {});
@@ -31,6 +32,7 @@ export default Ember.Component.extend({
 				})[0]);
 			}
 		},
+		//Standard function to discard changes and give one step back
 		discardChanges(f) {
 			switch (f) {
 				case "player":
@@ -44,6 +46,7 @@ export default Ember.Component.extend({
 				break;
 			}
 		},
+		//Standard function to send the made changes to the backend
 		saveChanges(f) {
 			var self = this;
 			var data;
@@ -188,6 +191,7 @@ export default Ember.Component.extend({
 				}
 			});
 		},
+		//Standard function to delete an element
 		deleteElement(f, id) {
 			var name, ajaxURL;
 			var data;
@@ -305,6 +309,7 @@ export default Ember.Component.extend({
 				}
 			});
 		},
+		//Loads the information of one player, selected in the sign up player section
 		showPlayer(id) {
 			var self = this;
 			Ember.$("#choose_player_"+id)[0].style.display = "none";
@@ -349,6 +354,7 @@ export default Ember.Component.extend({
 				}
 			});
 		},
+		//When a season in chosen in the sign up player section, this function shows al the teams participating in the season
 		loadTeamList() {
 			var id = parseInt(Ember.$("#sign_new_season")[0].value);
 			var t = this.get("teamList").filter(function(e) {

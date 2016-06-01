@@ -5,6 +5,7 @@ var loginComp = Ember.Component.extend({
 	isLoading: false,
 	badContent: false,
 	actions: {
+		//Checks the content for SQL injection
 		checkContent(t) {
 			var r = false;
 			var b = ["'", "\\", ";", "\""];
@@ -13,6 +14,7 @@ var loginComp = Ember.Component.extend({
 			}
 			this.set("badContent", r);
 		},
+		//Shows a message when a connection error happens
 		connectionError() {
 			Ember.$(".error_msg").hide();
 			Ember.$("#errorConnecting").fadeIn();
@@ -20,6 +22,7 @@ var loginComp = Ember.Component.extend({
 				Ember.$("#errorConnecting").fadeOut();
 			}, 5000);
 		},
+		//Shows a message when a login error happens
 		loginError() {
 			Ember.$(".error_msg").hide();
 			Ember.$("#errorLogging").fadeIn();
@@ -27,6 +30,7 @@ var loginComp = Ember.Component.extend({
 				Ember.$("#errorLogging").fadeOut();
 			}, 5000);
 		},
+		//Shows a message when a form error happens
 		formError() {
 			Ember.$(".error_msg").hide();
 			Ember.$("#errorForm").fadeIn();
@@ -34,6 +38,7 @@ var loginComp = Ember.Component.extend({
 				Ember.$("#errorForm").fadeOut();
 			}, 5000);
 		},
+		//Shows a message if potential injection is detected
 		contentError() {
 			Ember.$(".error_msg").hide();
 			Ember.$("#errorContent").fadeIn();
@@ -44,6 +49,7 @@ var loginComp = Ember.Component.extend({
 		loginSuccess(token) {
 			this.get("loginSuccess")(token);
 		},
+		//Submit login information to the backend
 		submit() {
 			this.set("isLoading", true);
 			var u = Ember.$("#username")[0].value;

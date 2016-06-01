@@ -6,6 +6,7 @@ export default Ember.Component.extend({
 	isError: false,
 	errorMsg: null,
 	teamData: null,
+	//When the component is initialized, loads the information from the backend
 	init: function() {
 		this._super();
 		var self = this;

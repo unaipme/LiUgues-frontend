@@ -16,6 +16,8 @@ export default Ember.Component.extend({
 	roundList: null,
 	gameList: null,
 	playerList: null,
+	// All the information that will be needed throughout the use of the admin page will be loaded
+	//in this init() function.
 	init: function() {
 		this._super();
 		var self = this;
@@ -82,6 +84,7 @@ export default Ember.Component.extend({
 		});
 	},
 	actions: {
+		//Makes the effect of a section appearing and disappearing possible
 		toggleElement(id) {
 			var p = Ember.$(id)[0];
 			var el = p.nextElementSibling;
@@ -93,6 +96,7 @@ export default Ember.Component.extend({
 				a.className += " arrow_turn";
 			}
 		},
+		//Displays an error or success message, normally used after connecting to the backend
 		showMessage(id, txt) {
 			var el = Ember.$("#"+id)[0];
 			el.innerHTML = txt;
@@ -101,6 +105,7 @@ export default Ember.Component.extend({
 				Ember.$(el).fadeOut();
 			}, 5000);
 		},
+		//Logs the actual user out with the token
 		logOut() {
 			var self = this;
 			Ember.$.ajax("https://liugues-api.herokuapp.com/p/logout", {
@@ -110,13 +115,14 @@ export default Ember.Component.extend({
 				success: function(data) {
 					console.log(data);
 					if (data.error) {
-						alert(data.msg);
+						alert(data.data);
 					} else {
 						self.get("goToLogin")();
 					}
 				}
 			});
 		},
+		//Sets the tab so that browsing through tabs is possible
 		setTab(n) {
 			this.set("chosenTab", n);
 		}

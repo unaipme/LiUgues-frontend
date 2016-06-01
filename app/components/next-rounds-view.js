@@ -5,9 +5,10 @@ export default Ember.Component.extend({
 	isError: false,
 	gameList: null,
 	ajaxURL: null,
+	// When the component initializes, the function below loads the information received
+	//from the given URL (which will be an URL to the backend)
 	init: function() {
 		this._super();
-		console.log("HEEEY",this.get("ajaxURL"));
 		var self = this;
 		var url = self.get("ajaxURL");
 		Ember.$.ajax(url, {

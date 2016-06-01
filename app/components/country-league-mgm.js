@@ -43,6 +43,7 @@ export default Ember.Component.extend({
 		showMessage(id, txt) {
 			this.get("showMessage")(id, txt);
 		},
+		//Run when a country is selected in the league management section
 		showLeagues(event) {
 			var t = event.target;
 			var id = parseInt(t.options[t.selectedIndex].value);
@@ -63,6 +64,7 @@ export default Ember.Component.extend({
 				this.set("countryLeagues", r);
 			}
 		},
+		//Run when a league is selected in the season management section
 		showSeasons(event) {
 			var t = event.target;
 			var id = parseInt(t.options[t.selectedIndex].value);
@@ -82,6 +84,7 @@ export default Ember.Component.extend({
 				this.set("leagueSeasons", ss);
 			}
 		},
+		//Run when a season is selected in the round management section
 		showRounds(aID) {
 			var id;
 			if (aID === -1) {
@@ -99,6 +102,7 @@ export default Ember.Component.extend({
 			this.set("selectedRSeason", s);
 			this.set("selectedRSList", rounds);
 		},
+		//Standard function to delete an element
 		deleteElement(f) {
 			var name, ajaxURL;
 			var data;
@@ -120,10 +124,10 @@ export default Ember.Component.extend({
 					};
 					successFunc = function(data) {
 						if (data.error) {
-							self.send("showMessage", "league_error", data.msg);
+							self.send("showMessage", "league_error", data.data);
 							return;
 						}
-						self.send("showMessage", "league_success", data.msg);
+						self.send("showMessage", "league_success", data.data);
 						setTimeout(function() {
 							window.location.reload();
 						}, 1500);
@@ -153,10 +157,10 @@ export default Ember.Component.extend({
 					};
 					successFunc = function(data) {
 						if (data.error) {
-							self.send("showMessage", "country_error", data.msg);
+							self.send("showMessage", "country_error", data.data);
 							return;
 						}
-						self.send("showMessage", "country_success", data.msg);
+						self.send("showMessage", "country_success", data.data);
 						setTimeout(function() {
 							window.location.reload();
 						}, 1500);
@@ -186,10 +190,10 @@ export default Ember.Component.extend({
 					};
 					successFunc = function(data) {
 						if (data.error) {
-							self.send("showMessage", "season_error", data.msg);
+							self.send("showMessage", "season_error", data.data);
 							return;
 						}
-						self.send("showMessage", "season_success", data.msg);
+						self.send("showMessage", "season_success", data.data);
 						setTimeout(function() {
 							window.location.reload();
 						}, 1500);
@@ -217,10 +221,10 @@ export default Ember.Component.extend({
 					};
 					successFunc = function(data) {
 						if (data.error) {
-							self.send("showMessage", "round_error", data.msg);
+							self.send("showMessage", "round_error", data.data);
 							return;
 						}
-						self.send("showMessage", "round_success", data.msg);
+						self.send("showMessage", "round_success", data.data);
 						setTimeout(function() {
 							window.location.reload();
 						}, 1500);
@@ -248,7 +252,8 @@ export default Ember.Component.extend({
 					errorFunc();
 				}
 			});
-		},		
+		},
+		//When modifying the information of a country, checks if a change has been made before allowing to update the database
 		checkCountryChange() {
 			var nn = this.get("selectedCountry").c_name;
 			var on = this.get("countryList")[this.get("selectedCountryIndex")].c_name;
@@ -260,6 +265,7 @@ export default Ember.Component.extend({
 				Ember.$("#save_ch_country")[0].disabled = true;
 			}
 		},
+		//Checks for change when modifying a league, as function above
 		checkLeagueChange() {
 			var nl = this.get("selectedLeague");
 			var ol = this.get("leagueList")[this.get("selectedLeagueIndex")];
@@ -275,6 +281,7 @@ export default Ember.Component.extend({
 				Ember.$("#save_ch_league")[0].disabled = true;
 			}
 		},
+		//Standard function to store the changes in the database
 		saveChanges(f) {
 			var self = this;
 			var data;
@@ -309,7 +316,7 @@ export default Ember.Component.extend({
 					//ajaxURL = "http://localhost:5000/p/ch_country";
 					ajaxURL = "https://liugues-api.herokuapp.com/p/ch_country";
 					successFunc = function(data) {
-						self.send("showMessage", "country_success", data.msg);
+						self.send("showMessage", "country_success", data.data);
 						setTimeout(function() {
 							window.location.reload();
 						}, 1500);
@@ -362,7 +369,7 @@ export default Ember.Component.extend({
 						if (data.error) {
 							
 						} else {
-							self.send("showMessage", "league_success", data.msg);
+							self.send("showMessage", "league_success", data.data);
 							setTimeout(function() {
 								window.location.reload();
 							}, 1500);
@@ -406,7 +413,7 @@ export default Ember.Component.extend({
 						if (data.error) {
 							
 						} else {
-							self.send("showMessage", "season_success", data.msg);
+							self.send("showMessage", "season_success", data.data);
 							setTimeout(function() {
 								window.location.reload();
 							}, 1500);
@@ -489,6 +496,7 @@ export default Ember.Component.extend({
 				}
 			});
 		},
+		//Standard function to discard made changes and step back
 		discardChanges(f) {
 			switch (f) {
 				case "country":
@@ -514,6 +522,7 @@ export default Ember.Component.extend({
 					break;
 			}
 		},
+		//Run when a country is selected for modification, or when a new country is to be created
 		loadCountry(event) {
 			var t = event.target;
 			var id = parseInt(t.options[t.selectedIndex].value);
@@ -549,6 +558,7 @@ export default Ember.Component.extend({
 				//ERROR HANDLING
 			}
 		},
+		//Run when a league is selected for modification, or when a new league is to be created
 		loadLeague(event) {
 			var t = event.target;
 			var id = parseInt(t.options[t.selectedIndex].value);
@@ -584,6 +594,7 @@ export default Ember.Component.extend({
 				this.set("selectedLeague", null);
 			}
 		},
+		//Run when a country is season for modification, or when a new season is to be created
 		loadSeason(event) {
 			var t = event.target;
 			var id = parseInt(t.options[t.selectedIndex].value);
@@ -619,6 +630,7 @@ export default Ember.Component.extend({
 				this.set("selectedLeague", null);
 			}
 		},
+		//Function that calls the fast creation of the back-end
 		fastCreate() {
 			var date = Ember.$("#fc_round_week")[0].value;
 			var amount = Ember.$("#fc_team_amount")[0].value;
@@ -635,9 +647,9 @@ export default Ember.Component.extend({
 				success: function(data) {
 					console.log("SUCCESS?", data);
 					if (data.error) {
-						self.send("showMessage", "round_error", data.msg);
+						self.send("showMessage", "round_error", data.data);
 					} else {
-						self.send("showMessage", "round_success", data.msg);
+						self.send("showMessage", "round_success", data.data);
 						setTimeout(function() {
 							window.location.reload();
 						}, 1500);
@@ -648,6 +660,7 @@ export default Ember.Component.extend({
 				}
 			});
 		},
+		//Function used to emulate the scroll between rounds
 		scrollList(n) {
 			var v = this.get("selectedRSListEl");
 			var nv = v + n;
